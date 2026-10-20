@@ -1,164 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ormagal Stores - Memories for a Better Tomorrow</title>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ormagal Stores</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-        .animate-marquee { display: inline-block; animation: marquee 25s linear infinite; }
-    </style>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');body{font-family:'Plus Jakarta Sans',sans-serif}@keyframes marquee{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}.animate-marquee{display:inline-block;animation:marquee 25s linear infinite}</style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
-
-    <!-- Top Announcement Bar -->
     <div class="bg-emerald-900 text-emerald-100 text-xs py-1.5 px-4 text-center font-medium flex items-center justify-center gap-2">
-        <i class="fa-solid fa-store text-amber-400"></i>
-        <span>Official Ormagal Stores Online Retail Hub • Fast WhatsApp Checkout</span>
+        <i class="fa-solid fa-store text-amber-400"></i><span>Official Ormagal Stores Online Retail Hub • Fast WhatsApp Checkout</span>
     </div>
-
-    <!-- Marquee -->
     <div class="bg-amber-500 text-slate-900 text-xs sm:text-sm py-2 overflow-hidden whitespace-nowrap font-bold shadow-inner flex items-center">
-        <div class="flex items-center gap-2 px-4 bg-amber-600 text-white z-10 shadow-md">
-            <i class="fa-solid fa-bullhorn"></i> ANNOUNCEMENT:
-        </div>
-        <div class="inline-block animate-marquee pl-4">
-            <span id="marqueeText">Special festive discounts live now! Order premium essentials and get doorstep delivery instantly via WhatsApp!</span>
-        </div>
+        <div class="flex items-center gap-2 px-4 bg-amber-600 text-white z-10 shadow-md"><i class="fa-solid fa-bullhorn"></i> ANNOUNCEMENT:</div>
+        <div class="inline-block animate-marquee pl-4"><span id="marqueeText">Special festive discounts live now!</span></div>
     </div>
-
-    <!-- Header -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
         <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
             <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('store')">
                 <img id="navLogoImg" src="" alt="Logo" class="w-12 h-12 rounded-full object-cover border-2 border-amber-600 hidden">
-                <div id="navLogoPlaceholder" class="w-12 h-12 rounded-full bg-slate-900 border-2 border-amber-600 flex items-center justify-center text-amber-400 font-bold text-lg">OS</div>
-                <div>
-                    <h1 id="navStoreName" class="font-bold text-lg sm:text-xl text-slate-900 tracking-tight">Ormagal Stores</h1>
-                    <p id="navTagline" class="text-xs text-amber-700 font-medium">Memories for a Better Tomorrow</p>
-                </div>
+                <div id="navLogoPlaceholder" class="w-12 h-12 rounded-full bg-slate-900 border-2 border-amber-600 flex items-center justify-center text-amber-400 font-bold">OS</div>
+                <div><h1 id="navStoreName" class="font-bold text-lg sm:text-xl text-slate-900">Ormagal Stores</h1><p id="navTagline" class="text-xs text-amber-700 font-medium">Memories for a Better Tomorrow</p></div>
             </div>
-            <div class="flex items-center gap-2 sm:gap-3">
-                <button onclick="openCartDrawer()" class="relative bg-emerald-50 text-emerald-700 hover:bg-emerald-100 px-3.5 py-2 rounded-xl font-semibold text-sm transition flex items-center gap-2 border border-emerald-200">
-                    <i class="fa-solid fa-bag-shopping"></i>
-                    <span class="hidden sm:inline">Cart</span>
-                    <span id="cartBadge" class="absolute -top-1.5 -right-1.5 bg-emerald-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold shadow">0</span>
-                </button>
-            </div>
+            <button onclick="openCartDrawer()" class="relative bg-emerald-50 text-emerald-700 px-3.5 py-2 rounded-xl font-semibold text-sm transition flex items-center gap-2 border border-emerald-200">
+                <i class="fa-solid fa-bag-shopping"></i><span>Cart</span><span id="cartBadge" class="absolute -top-1.5 -right-1.5 bg-emerald-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
+            </button>
         </div>
     </header>
-
     <main class="flex-grow max-w-6xl w-full mx-auto p-4 sm:p-6">
-        
-        <!-- IN-SCREEN ADMIN LOGIN -->
-        <div id="adminLoginScreen" class="hidden max-w-md mx-auto mt-12 bg-white p-8 rounded-3xl shadow-xl border border-slate-200 text-center space-y-4">
-            <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
-                <i class="fa-solid fa-lock"></i>
-            </div>
-            <h3 class="font-bold text-xl text-slate-900">Admin Authentication</h3>
-            <p class="text-xs text-slate-500">Enter your 4-digit admin PIN (Default: 1234)</p>
-            <input type="password" id="screenPinInput" maxlength="4" class="w-36 text-center text-2xl tracking-widest px-4 py-2 border rounded-xl font-bold mx-auto block focus:outline-none focus:ring-2 focus:ring-emerald-500">
-            <div class="flex gap-2 pt-2">
-                <button onclick="cancelAdminLogin()" class="flex-1 bg-slate-100 py-2.5 rounded-xl text-xs font-semibold text-slate-700">Cancel</button>
-                <button onclick="verifyScreenPin()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl text-xs font-semibold">Login</button>
-            </div>
+        <div id="adminLoginScreen" class="hidden max-w-md mx-auto mt-12 bg-white p-8 rounded-3xl shadow-xl border text-center space-y-4">
+            <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold"><i class="fa-solid fa-lock"></i></div>
+            <h3 class="font-bold text-xl text-slate-900">Admin Authentication</h3><p class="text-xs text-slate-500">Enter PIN (1234)</p>
+            <input type="password" id="screenPinInput" maxlength="4" class="w-36 text-center text-2xl tracking-widest px-4 py-2 border rounded-xl font-bold mx-auto block focus:outline-none">
+            <div class="flex gap-2 pt-2"><button onclick="cancelAdminLogin()" class="flex-1 bg-slate-100 py-2.5 rounded-xl text-xs font-semibold">Cancel</button><button onclick="verifyScreenPin()" class="flex-1 bg-emerald-600 text-white py-2.5 rounded-xl text-xs font-semibold">Login</button></div>
         </div>
-
-        <!-- Customer Store View -->
         <div id="customerView" class="space-y-6">
-            <div id="bannerContainer" class="relative rounded-2xl overflow-hidden shadow-md bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 text-white p-6 sm:p-10 border border-slate-800 bg-cover bg-center min-h-[160px] flex items-center">
-                <div class="relative z-10 max-w-xl space-y-2">
-                    <span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wider inline-block">Official Store</span>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Ormagal Digital Showcase</h2>
-                </div>
+            <div id="bannerContainer" class="relative rounded-2xl overflow-hidden shadow-md bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 text-white p-6 sm:p-10 border bg-cover bg-center min-h-[160px] flex items-center">
+                <div class="relative z-10 max-w-xl space-y-2"><span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs px-3 py-1 rounded-full font-semibold uppercase">Official Store</span><h2 class="text-2xl sm:text-3xl font-extrabold">Ormagal Digital Showcase</h2></div>
             </div>
-
             <div class="flex flex-col sm:flex-row gap-3 items-center justify-between">
-                <div class="relative w-full sm:w-80">
-                    <i class="fa-solid fa-search absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
-                    <input type="text" id="storeSearchInput" oninput="filterStoreProducts()" placeholder="Search products..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-sm">
-                </div>
+                <div class="relative w-full sm:w-80"><i class="fa-solid fa-search absolute left-3.5 top-3.5 text-slate-400 text-sm"></i><input type="text" id="storeSearchInput" oninput="filterStoreProducts()" placeholder="Search..." class="w-full pl-10 pr-4 py-2.5 bg-white border rounded-xl text-sm focus:outline-none"></div>
                 <div id="categoryPillsContainer" class="flex items-center gap-2 overflow-x-auto w-full pb-2"></div>
             </div>
-
             <div id="customerProductGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"></div>
         </div>
-
-        <!-- Admin Dashboard View -->
         <div id="adminView" class="hidden space-y-6">
-            <div class="bg-white rounded-2xl p-2 shadow-sm border border-slate-200 flex flex-wrap gap-2 items-center justify-between">
+            <div class="bg-white rounded-2xl p-2 shadow-sm border flex flex-wrap gap-2 items-center justify-between">
                 <div class="flex flex-wrap gap-2 flex-grow">
-                    <button onclick="switchAdminTab('products')" id="adminTabProducts" class="py-2.5 px-4 rounded-xl font-semibold text-sm transition bg-emerald-600 text-white shadow-sm">Products</button>
-                    <button onclick="switchAdminTab('categories')" id="adminTabCategories" class="py-2.5 px-4 rounded-xl font-semibold text-sm transition text-slate-600 hover:bg-slate-100">Categories</button>
-                    <button onclick="switchAdminTab('orders')" id="adminTabOrders" class="py-2.5 px-4 rounded-xl font-semibold text-sm transition text-slate-600 hover:bg-slate-100">Orders</button>
-                    <button onclick="switchAdminTab('settings')" id="adminTabSettings" class="py-2.5 px-4 rounded-xl font-semibold text-sm transition text-slate-600 hover:bg-slate-100">Store Settings</button>
+                    <button onclick="switchAdminTab('products')" id="adminTabProducts" class="py-2.5 px-4 rounded-xl font-semibold text-sm bg-emerald-600 text-white">Products</button>
+                    <button onclick="switchAdminTab('categories')" id="adminTabCategories" class="py-2.5 px-4 rounded-xl font-semibold text-sm text-slate-600">Categories</button>
+                    <button onclick="switchAdminTab('orders')" id="adminTabOrders" class="py-2.5 px-4 rounded-xl font-semibold text-sm text-slate-600">Orders</button>
+                    <button onclick="switchAdminTab('settings')" id="adminTabSettings" class="py-2.5 px-4 rounded-xl font-semibold text-sm text-slate-600">Store Settings</button>
                 </div>
-                <button onclick="switchView('store')" class="bg-slate-100 hover:bg-slate-200 text-slate-800 px-4 py-2.5 rounded-xl font-semibold text-xs transition">Exit to Store</button>
+                <button onclick="switchView('store')" class="bg-slate-100 text-slate-800 px-4 py-2.5 rounded-xl font-semibold text-xs">Exit</button>
             </div>
-
-            <!-- Tab 1: Products -->
             <div id="adminSectionProducts" class="space-y-4">
-                <div class="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border">
-                    <h3 class="font-bold text-lg text-slate-900">Manage Products</h3>
-                    <button onclick="openProductModal()" class="bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-sm font-semibold shadow">Add Product</button>
-                </div>
+                <div class="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border"><h3 class="font-bold text-lg">Manage Products</h3><button onclick="openProductModal()" class="bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-sm font-semibold">Add Product</button></div>
                 <div id="adminProductTable" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             </div>
-
-            <!-- Tab 2: Categories -->
             <div id="adminSectionCategories" class="hidden space-y-4">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border max-w-xl space-y-4">
-                    <h3 class="font-bold text-lg">Manage Categories</h3>
-                    <div class="flex gap-2">
-                        <input type="text" id="newCategoryInput" placeholder="New category name" class="flex-grow px-4 py-2 border rounded-xl text-sm">
-                        <button onclick="addNewCategory()" class="bg-emerald-600 text-white px-4 py-2 rounded-xl text-sm font-semibold">Add</button>
-                    </div>
-                    <div id="adminCategoryList" class="flex flex-wrap gap-2"></div>
-                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border max-w-xl space-y-4"><h3 class="font-bold text-lg">Categories</h3><div class="flex gap-2"><input type="text" id="newCategoryInput" placeholder="Name" class="flex-grow px-4 py-2 border rounded-xl text-sm"><button onclick="addNewCategory()" class="bg-emerald-600 text-white px-4 py-2 rounded-xl text-sm font-semibold">Add</button></div><div id="adminCategoryList" class="flex flex-wrap gap-2"></div></div>
             </div>
-
-            <!-- Tab 3: Orders -->
             <div id="adminSectionOrders" class="hidden space-y-4">
-                <div class="bg-white p-4 rounded-2xl shadow-sm border flex justify-between items-center">
-                    <h3 class="font-bold text-lg">Customer Orders</h3>
-                    <button onclick="clearAllOrders()" class="text-red-600 text-xs font-semibold">Clear History</button>
-                </div>
+                <div class="bg-white p-4 rounded-2xl shadow-sm border flex justify-between items-center"><h3 class="font-bold text-lg">Orders</h3><button onclick="clearAllOrders()" class="text-red-600 text-xs font-semibold">Clear</button></div>
                 <div id="adminOrdersList" class="space-y-3"></div>
             </div>
-
-            <!-- Tab 4: Settings -->
             <div id="adminSectionSettings" class="hidden space-y-4">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border max-w-2xl space-y-4">
-                    <h3 class="font-bold text-lg border-b pb-2">Store Configuration & Business Info</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div><label class="block text-xs font-bold mb-1">Store Name</label><input type="text" id="settingStoreName" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
-                        <div><label class="block text-xs font-bold mb-1">WhatsApp Number</label><input type="text" id="settingWhatsapp" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div><label class="block text-xs font-bold mb-1">Tagline</label><input type="text" id="settingTagline" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
-                        <div><label class="block text-xs font-bold mb-1">GSTN Number</label><input type="text" id="settingGstn" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
-                    </div>
-                    <div class="grid grid-cols-3 gap-4">
-                        <div><label class="block text-xs font-bold mb-1">Bank Name</label><input type="text" id="settingBankName" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
-                        <div><label class="block text-xs font-bold mb-1">Account No</label><input type="text" id="settingBankAcc" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
-                        <div><label class="block text-xs font-bold mb-1">IFSC Code</label><input type="text" id="settingIfsc" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div><label class="block text-xs font-bold mb-1">UPI ID</label><input type="text" id="settingUpiId" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
-                        <div><label class="block text-xs font-bold mb-1">UPI QR Code</label><input type="file" id="settingUpiQrFile" accept="image/*" onchange="handleUpiQrUpload(event)" class="w-full text-xs"></div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div><label class="block text-xs font-bold mb-1">Store Logo</label><input type="file" id="settingLogoFile" accept="image/*" onchange="handleLogoUpload(event)" class="w-full text-xs"></div>
-                        <div><label class="block text-xs font-bold mb-1">Banner Image</label><input type="file" id="settingBannerFile" accept="image/*" onchange="handleBannerUpload(event)" class="w-full text-xs"></div>
-                    </div>
-                    <div><label class="block text-xs font-bold mb-1">Announcement Marquee Text</label><input type="text" id="settingAnnouncement" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
+                    <h3 class="font-bold text-lg border-b pb-2">Settings</h3>
+                    <div class="grid grid-cols-2 gap-4"><div><label class="block text-xs font-bold mb-1">Store Name</label><input type="text" id="settingStoreName" class="w-full px-4 py-2 border rounded-xl text-sm"></div><div><label class="block text-xs font-bold mb-1">WhatsApp</label><input type="text" id="settingWhatsapp" class="w-full px-4 py-2 border rounded-xl text-sm"></div></div>
+                    <div class="grid grid-cols-2 gap-4"><div><label class="block text-xs font-bold mb-1">Tagline</label><input type="text" id="settingTagline" class="w-full px-4 py-2 border rounded-xl text-sm"></div><div><label class="block text-xs font-bold mb-1">GSTN</label><input type="text" id="settingGstn" class="w-full px-4 py-2 border rounded-xl text-sm"></div></div>
+                    <div class="grid grid-cols-3 gap-4"><div><label class="block text-xs font-bold mb-1">Bank Name</label><input type="text" id="settingBankName" class="w-full px-4 py-2 border rounded-xl text-sm"></div><div><label class="block text-xs font-bold mb-1">Acc No</label><input type="text" id="settingBankAcc" class="w-full px-4 py-2 border rounded-xl text-sm"></div><div><label class="block text-xs font-bold mb-1">IFSC</label><input type="text" id="settingIfsc" class="w-full px-4 py-2 border rounded-xl text-sm"></div></div>
+                    <div class="grid grid-cols-2 gap-4"><div><label class="block text-xs font-bold mb-1">UPI ID</label><input type="text" id="settingUpiId" class="w-full px-4 py-2 border rounded-xl text-sm"></div><div><label class="block text-xs font-bold mb-1">UPI QR</label><input type="file" id="settingUpiQrFile" accept="image/*" onchange="handleUpiQrUpload(event)" class="w-full text-xs"></div></div>
+                    <div class="grid grid-cols-2 gap-4"><div><label class="block text-xs font-bold mb-1">Logo</label><input type="file" id="settingLogoFile" accept="image/*" onchange="handleLogoUpload(event)" class="w-full text-xs"></div><div><label class="block text-xs font-bold mb-1">Banner</label><input type="file" id="settingBannerFile" accept="image/*" onchange="handleBannerUpload(event)" class="w-full text-xs"></div></div>
+                    <div><label class="block text-xs font-bold mb-1">Marquee</label><input type="text" id="settingAnnouncement" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
                     <button onclick="saveStoreSettings()" class="bg-emerald-600 text-white px-6 py-2.5 rounded-xl font-semibold text-sm shadow">Save Settings</button>
                 </div>
             </div>
@@ -168,692 +83,231 @@
     <!-- Product View Modal -->
     <div id="productModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
-            <div class="relative h-64 bg-slate-100 rounded-2xl overflow-hidden">
-                <img id="modalProdMainImg" src="" class="w-full h-full object-cover">
-                <button onclick="closeProductModal()" class="absolute top-4 right-4 bg-white/80 hover:bg-white text-slate-800 w-9 h-9 rounded-full flex items-center justify-center shadow"><i class="fa-solid fa-xmark"></i></button>
-            </div>
+            <div class="relative h-64 bg-slate-100 rounded-2xl overflow-hidden"><img id="modalProdMainImg" src="" class="w-full h-full object-cover"><button onclick="closeProductModal()" class="absolute top-4 right-4 bg-white/80 w-9 h-9 rounded-full flex items-center justify-center shadow"><i class="fa-solid fa-xmark"></i></button></div>
             <div id="modalThumbnails" class="flex gap-2 overflow-x-auto pb-1 hidden"></div>
-            <div id="modalVideoContainer" class="hidden">
-                <video id="modalVideoPlayer" class="w-full h-48 rounded-xl object-cover" controls></video>
-            </div>
-            <div>
-                <span id="modalProdCategory" class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg">Category</span>
-                <h3 id="modalProdName" class="text-xl font-bold text-slate-900 mt-1">Title</h3>
-                <div class="flex items-center gap-3 mt-1">
-                    <span id="modalProdSalePrice" class="text-xl font-extrabold text-emerald-600">₹0</span>
-                    <span id="modalProdMrpPrice" class="text-sm font-semibold text-slate-400 line-through">₹0</span>
-                    <span id="modalProdGstBadge" class="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">GST 0%</span>
-                </div>
-            </div>
+            <div id="modalVideoContainer" class="hidden"><video id="modalVideoPlayer" class="w-full h-48 rounded-xl object-cover" controls></video></div>
+            <div><span id="modalProdCategory" class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg">Category</span><h3 id="modalProdName" class="text-xl font-bold mt-1">Title</h3><div class="flex items-center gap-3 mt-1"><span id="modalProdSalePrice" class="text-xl font-extrabold text-emerald-600">₹0</span><span id="modalProdMrpPrice" class="text-sm text-slate-400 line-through">₹0</span><span id="modalProdGstBadge" class="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">GST 0%</span></div></div>
             <p id="modalProdDesc" class="text-xs text-slate-600 leading-relaxed"></p>
-            <div class="flex items-center justify-between pt-2">
-                <span class="text-sm font-bold text-slate-700">Quantity</span>
-                <div class="flex items-center gap-3 bg-slate-100 px-3 py-1.5 rounded-xl">
-                    <button onclick="adjustModalQty(-1)" class="w-7 h-7 bg-white rounded-lg shadow-sm font-bold">-</button>
-                    <span id="modalQtyVal" class="font-bold text-sm w-6 text-center">1</span>
-                    <button onclick="adjustModalQty(1)" class="w-7 h-7 bg-white rounded-lg shadow-sm font-bold">+</button>
-                </div>
-            </div>
-            <button onclick="confirmAddToCart()" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold shadow-lg flex items-center justify-center gap-2">
-                <i class="fa-solid fa-cart-plus"></i> Add to Cart • <span id="modalTotalBtnPrice">₹0</span>
-            </button>
+            <div class="flex items-center justify-between pt-2"><span class="text-sm font-bold">Quantity</span><div class="flex items-center gap-3 bg-slate-100 px-3 py-1.5 rounded-xl"><button onclick="adjustModalQty(-1)" class="w-7 h-7 bg-white rounded-lg font-bold">-</button><span id="modalQtyVal" class="font-bold text-sm w-6 text-center">1</span><button onclick="adjustModalQty(1)" class="w-7 h-7 bg-white rounded-lg font-bold">+</button></div></div>
+            <button onclick="confirmAddToCart()" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold shadow-lg flex items-center justify-center gap-2"><i class="fa-solid fa-cart-plus"></i> Add to Cart • <span id="modalTotalBtnPrice">₹0</span></button>
         </div>
     </div>
 
-    <!-- Admin Add/Edit Product Modal -->
+    <!-- Admin Product Modal -->
     <div id="adminProdModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center border-b pb-3">
-                <h3 id="adminModalTitle" class="font-bold text-lg text-slate-900">Add Product</h3>
-                <button onclick="closeAdminProdModal()" class="text-slate-400"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
+            <div class="flex justify-between items-center border-b pb-3"><h3 id="adminModalTitle" class="font-bold text-lg">Add Product</h3><button onclick="closeAdminProdModal()"><i class="fa-solid fa-xmark"></i></button></div>
             <input type="hidden" id="editProdId">
             <div class="space-y-3">
-                <div><label class="block text-xs font-bold mb-1">Product Name</label><input type="text" id="adminProdName" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
+                <div><label class="block text-xs font-bold mb-1">Name</label><input type="text" id="adminProdName" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
                 <div><label class="block text-xs font-bold mb-1">Category</label><select id="adminProdCategorySelect" class="w-full px-4 py-2 border rounded-xl text-sm bg-white"></select></div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div><label class="block text-xs font-bold mb-1">MRP (₹)</label><input type="number" id="adminProdMrp" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
-                    <div><label class="block text-xs font-bold mb-1">Sale Price (₹)</label><input type="number" id="adminProdSale" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div><label class="block text-xs font-bold mb-1">Delivery Charge (₹)</label><input type="number" id="adminProdDelivery" class="w-full px-4 py-2 border rounded-xl text-sm" value="50"></div>
-                    <div><label class="block text-xs font-bold mb-1">GST Rate (%)</label>
-                        <select id="adminProdGst" class="w-full px-4 py-2 border rounded-xl text-sm bg-white">
-                            <option value="0">0%</option>
-                            <option value="5">5%</option>
-                            <option value="12">12%</option>
-                            <option value="18">18%</option>
-                        </select>
-                    </div>
-                </div>
-                <div><label class="block text-xs font-bold mb-1">Primary Image File</label><input type="file" id="adminProdImgFile" accept="image/*" class="w-full text-xs"><input type="hidden" id="adminProdImgBase64"></div>
-                
-                <!-- Upload Options for Extra Images (1, 2, 3) -->
-                <div class="border-t pt-2">
-                    <label class="block text-xs font-bold mb-1 text-emerald-700 uppercase">Extra Images (Upload up to 3)</label>
-                    <div class="grid grid-cols-3 gap-2">
-                        <input type="file" id="extraImg1" accept="image/*" onchange="handleExtraImage(event, 0)" class="w-full text-[10px]">
-                        <input type="file" id="extraImg2" accept="image/*" onchange="handleExtraImage(event, 1)" class="w-full text-[10px]">
-                        <input type="file" id="extraImg3" accept="image/*" onchange="handleExtraImage(event, 2)" class="w-full text-[10px]">
-                    </div>
-                    <input type="hidden" id="adminProdExtraImagesBase64">
-                </div>
-
-                <!-- Video File Upload Option -->
-                <div>
-                    <label class="block text-xs font-bold mb-1 text-emerald-700 uppercase">Product Video (Upload File)</label>
-                    <input type="file" id="adminProdVideoFile" accept="video/*" onchange="handleVideoUpload(event)" class="w-full text-xs">
-                    <input type="hidden" id="adminProdVideoBase64">
-                </div>
-
+                <div class="grid grid-cols-2 gap-3"><div><label class="block text-xs font-bold mb-1">MRP (₹)</label><input type="number" id="adminProdMrp" class="w-full px-4 py-2 border rounded-xl text-sm"></div><div><label class="block text-xs font-bold mb-1">Sale Price (₹)</label><input type="number" id="adminProdSale" class="w-full px-4 py-2 border rounded-xl text-sm"></div></div>
+                <div class="grid grid-cols-2 gap-3"><div><label class="block text-xs font-bold mb-1">Delivery (₹)</label><input type="number" id="adminProdDelivery" class="w-full px-4 py-2 border rounded-xl text-sm" value="50"></div><div><label class="block text-xs font-bold mb-1">GST (%)</label><select id="adminProdGst" class="w-full px-4 py-2 border rounded-xl text-sm bg-white"><option value="0">0%</option><option value="5">5%</option><option value="12">12%</option><option value="18">18%</option></select></div></div>
+                <div><label class="block text-xs font-bold mb-1">Primary Image</label><input type="file" id="adminProdImgFile" accept="image/*" class="w-full text-xs"><input type="hidden" id="adminProdImgBase64"></div>
+                <div><label class="block text-xs font-bold mb-1 text-emerald-700 uppercase">Extra Images (Up to 3)</label><div class="grid grid-cols-3 gap-2"><input type="file" id="extraImg1" accept="image/*" onchange="handleExtraImage(event, 0)" class="w-full text-[10px]"><input type="file" id="extraImg2" accept="image/*" onchange="handleExtraImage(event, 1)" class="w-full text-[10px]"><input type="file" id="extraImg3" accept="image/*" onchange="handleExtraImage(event, 2)" class="w-full text-[10px]"></div><input type="hidden" id="adminProdExtraImagesBase64"></div>
+                <div><label class="block text-xs font-bold mb-1 text-emerald-700 uppercase">Video File</label><input type="file" id="adminProdVideoFile" accept="video/*" onchange="handleVideoUpload(event)" class="w-full text-xs"><input type="hidden" id="adminProdVideoBase64"></div>
                 <div><label class="block text-xs font-bold mb-1">Description</label><textarea id="adminProdDesc" rows="2" class="w-full px-4 py-2 border rounded-xl text-sm"></textarea></div>
             </div>
-            <div class="pt-4 border-t flex justify-end gap-2">
-                <button onclick="closeAdminProdModal()" class="px-4 py-2.5 bg-slate-100 rounded-xl text-sm font-semibold">Cancel</button>
-                <button onclick="saveAdminProduct()" class="px-6 py-2.5 bg-emerald-600 text-white rounded-xl text-sm font-semibold shadow">Save Product</button>
-            </div>
+            <div class="pt-4 border-t flex justify-end gap-2"><button onclick="closeAdminProdModal()" class="px-4 py-2.5 bg-slate-100 rounded-xl text-sm font-semibold">Cancel</button><button onclick="saveAdminProduct()" class="px-6 py-2.5 bg-emerald-600 text-white rounded-xl text-sm font-semibold shadow">Save</button></div>
         </div>
     </div>
 
     <!-- Cart Drawer -->
     <div id="cartDrawer" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden justify-end">
-        <div class="bg-white w-full max-w-md h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
-            <div class="p-4 border-b flex items-center justify-between bg-slate-50">
-                <h3 class="font-bold text-lg text-slate-900 flex items-center gap-2">
-                    <i class="fa-solid fa-bag-shopping text-emerald-600"></i> Shopping Cart
-                </h3>
-                <button onclick="closeCartDrawer()" class="w-8 h-8 rounded-full hover:bg-slate-200 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
-            </div>
+        <div class="bg-white w-full max-w-md h-full shadow-2xl flex flex-col">
+            <div class="p-4 border-b flex items-center justify-between bg-slate-50"><h3 class="font-bold text-lg"><i class="fa-solid fa-bag-shopping text-emerald-600"></i> Cart</h3><button onclick="closeCartDrawer()"><i class="fa-solid fa-xmark"></i></button></div>
             <div id="cartItemsList" class="flex-grow overflow-y-auto p-4 space-y-3"></div>
             <div class="p-4 border-t bg-slate-50 space-y-3">
                 <div class="space-y-2 text-xs">
-                    <input type="text" id="checkoutName" placeholder="Customer Full Name *" class="w-full px-3 py-2 bg-white border rounded-xl">
-                    <input type="tel" id="checkoutPhone" placeholder="WhatsApp Phone Number *" class="w-full px-3 py-2 bg-white border rounded-xl">
+                    <input type="text" id="checkoutName" placeholder="Full Name *" class="w-full px-3 py-2 bg-white border rounded-xl">
+                    <input type="tel" id="checkoutPhone" placeholder="WhatsApp Phone *" class="w-full px-3 py-2 bg-white border rounded-xl">
                     <textarea id="checkoutAddress" rows="2" placeholder="Delivery Address *" class="w-full px-3 py-2 bg-white border rounded-xl"></textarea>
-                    
-                    <div class="bg-white p-3 rounded-xl border space-y-2">
-                        <div class="flex items-center justify-between">
-                            <span class="font-bold text-slate-700">Payment Method:</span>
-                            <select id="checkoutPayment" onchange="togglePaymentInstructions()" class="bg-slate-50 border rounded-lg px-2 py-1 text-xs font-semibold">
-                                <option value="UPI QR / Online">UPI QR / Online Payment</option>
-                                <option value="Cash on Delivery">Cash on Delivery (COD)</option>
-                            </select>
-                        </div>
-                        <div id="paymentInstructionsBox" class="text-[11px] text-slate-600 bg-emerald-50 p-2 rounded-lg border"></div>
-                    </div>
+                    <div class="bg-white p-3 rounded-xl border space-y-2"><div class="flex items-center justify-between"><span class="font-bold">Payment:</span><select id="checkoutPayment" onchange="togglePaymentInstructions()" class="bg-slate-50 border rounded-lg px-2 py-1 text-xs font-semibold"><option value="UPI QR / Online">UPI QR / Online</option><option value="Cash on Delivery">COD</option></select></div><div id="paymentInstructionsBox" class="text-[11px] text-slate-600 bg-emerald-50 p-2 rounded-lg border"></div></div>
                 </div>
-                <div class="space-y-1 pt-2 border-t text-sm">
-                    <div class="flex justify-between text-slate-600"><span>Subtotal</span><span id="cartSubtotal">₹0</span></div>
-                    <div class="flex justify-between text-slate-600"><span>Delivery</span><span id="cartTotalDelivery">₹0</span></div>
-                    <div class="flex justify-between font-extrabold text-base text-slate-900 pt-1 border-t"><span>Total</span><span id="cartGrandTotal" class="text-emerald-600">₹0</span></div>
-                </div>
-                <button onclick="placeWhatsAppOrder()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-bold shadow-lg transition flex items-center justify-center gap-2 text-sm">
-                    <i class="fa-brands fa-whatsapp text-lg"></i> Complete Order
-                </button>
+                <div class="space-y-1 pt-2 border-t text-sm"><div class="flex justify-between text-slate-600"><span>Subtotal</span><span id="cartSubtotal">₹0</span></div><div class="flex justify-between text-slate-600"><span>Delivery</span><span id="cartTotalDelivery">₹0</span></div><div class="flex justify-between font-extrabold text-base pt-1 border-t"><span>Total</span><span id="cartGrandTotal" class="text-emerald-600">₹0</span></div></div>
+                <button onclick="placeWhatsAppOrder()" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold shadow-lg transition flex items-center justify-center gap-2 text-sm"><i class="fa-brands fa-whatsapp text-lg"></i> Complete Order</button>
             </div>
         </div>
     </div>
 
-    <!-- TakeApp Style Order Confirmation Receipt Modal -->
+    <!-- TakeApp Style Receipt Modal -->
     <div id="orderConfirmationModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <h3 class="font-bold text-xl text-slate-900">Order Placed Successfully!</h3>
-            <p class="text-xs text-slate-500">Your order has been logged. Review your receipt below and send confirmation via WhatsApp:</p>
-            
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl">
+            <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold"><i class="fa-solid fa-check"></i></div>
+            <h3 class="font-bold text-xl">Order Placed Successfully!</h3><p class="text-xs text-slate-500">Review receipt below and send confirmation via WhatsApp:</p>
             <div id="receiptDetailsBox" class="bg-slate-50 p-4 rounded-2xl text-left text-xs space-y-2 border"></div>
-
-            <a id="whatsappShareBtn" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-bold shadow-lg transition flex items-center justify-center gap-2 text-sm">
-                <i class="fa-brands fa-whatsapp text-lg"></i> Send Order Receipt to WhatsApp
-            </a>
-            <button onclick="closeOrderConfirmation()" class="w-full bg-slate-100 text-slate-700 py-2.5 rounded-xl text-xs font-semibold">Close & Return to Store</button>
+            <a id="whatsappShareBtn" href="#" target="_blank" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold shadow-lg transition flex items-center justify-center gap-2 text-sm"><i class="fa-brands fa-whatsapp text-lg"></i> Send Order to WhatsApp Now</a>
+            <button onclick="closeOrderConfirmation()" class="w-full bg-slate-100 text-slate-700 py-2.5 rounded-xl text-xs font-semibold">Close & Return</button>
         </div>
     </div>
 
-    <!-- Application Script -->
     <script>
         const GAS_API_URL = "https://script.google.com/macros/s/AKfycbytTlha_jOSl9LinS8UHhxV4FoBZeWky1GYSlpCIWrRrVgjHZS-RrgTKsQRw2Obgo3PVA/exec";
+        let storeSettings = JSON.parse(localStorage.getItem('ormagal_settings_v14')) || {name:"Ormagal Stores",whatsapp:"+919513095508",tagline:"Memories for a Better Tomorrow",gstn:"UnderRegistration",bankName:"Ormagal Stores",bankAcc:"9513095508",ifsc:"ORMA0001234",upiId:"ormagal@upi",upiQr:"",logo:"",banner:"",announcement:"Special festive discounts live now!"};
+        let categories = JSON.parse(localStorage.getItem('ormagal_categories_v14')) || ["All","Groceries","Electronics","Home & Living"];
+        let products = [], orders = JSON.parse(localStorage.getItem('ormagal_orders_v14')) || [], cart = [], activeCategoryFilter = "All", currentModalProduct = null, modalQty = 1, tempExtraImages = ["","",""], tempVideoData = "";
 
-        let storeSettings = JSON.parse(localStorage.getItem('ormagal_settings_v13')) || {
-            name: "Ormagal Stores",
-            whatsapp: "+91 95130 95508",
-            tagline: "Memories for a Better Tomorrow",
-            gstn: "UnderRegistration",
-            bankName: "Ormagal Stores",
-            bankAcc: "9513095508",
-            ifsc: "ORMA0001234",
-            upiId: "ormagal@upi",
-            upiQr: "",
-            logo: "",
-            banner: "",
-            announcement: "Special festive discounts live now! Order premium essentials and get doorstep delivery instantly via WhatsApp!"
-        };
+        window.onload = function() { applyStoreSettings(); fetchLiveProducts(); renderCategoryPills(); renderAdminCategories(); renderAdminOrders(); updateCartBadge(); togglePaymentInstructions(); checkAdminHashRoute(); window.addEventListener('hashchange', checkAdminHashRoute); };
 
-        let categories = JSON.parse(localStorage.getItem('ormagal_categories_v13')) || ["All", "Groceries", "Electronics", "Home & Living"];
-        let products = [];
-        let orders = JSON.parse(localStorage.getItem('ormagal_orders_v13')) || [];
-        let cart = [];
-        let activeCategoryFilter = "All";
-        let currentModalProduct = null;
-        let modalQty = 1;
-        let tempExtraImages = ["", "", ""];
-        let tempVideoData = "";
-
-        window.onload = function() {
-            applyStoreSettings();
-            fetchLiveProducts();
-            renderCategoryPills();
-            renderAdminCategories();
-            renderAdminOrders();
-            updateCartBadge();
-            togglePaymentInstructions();
-            checkAdminHashRoute();
-            window.addEventListener('hashchange', checkAdminHashRoute);
-        };
-
-        async function fetchLiveProducts() {
-            try {
-                let res = await fetch(GAS_API_URL);
-                let data = await res.json();
-                if (data && data.products) { products = data.products; }
-            } catch(e) { console.log("Cloud fetch error"); }
-            renderCustomerProducts();
-            renderAdminProducts();
-        }
-
-        async function syncProductsToCloud() {
-            try {
-                await fetch(GAS_API_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(products) });
-            } catch(e) {}
-        }
+        async function fetchLiveProducts() { try { let res = await fetch(GAS_API_URL); let data = await res.json(); if(data && data.products) products = data.products; } catch(e){} renderCustomerProducts(); renderAdminProducts(); }
+        async function syncProductsToCloud() { try { await fetch(GAS_API_URL, {method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(products)}); } catch(e){} }
 
         function checkAdminHashRoute() {
-            if (window.location.hash === '#admin') {
-                document.getElementById('adminLoginScreen').classList.remove('hidden');
-                document.getElementById('customerView').classList.add('hidden');
-                document.getElementById('adminView').classList.add('hidden');
-                document.getElementById('screenPinInput').value = '';
-                document.getElementById('screenPinInput').focus();
-            } else {
-                document.getElementById('adminLoginScreen').classList.add('hidden');
-                switchView('store');
-            }
+            if(window.location.hash === '#admin'){ document.getElementById('adminLoginScreen').classList.remove('hidden'); document.getElementById('customerView').classList.add('hidden'); document.getElementById('adminView').classList.add('hidden'); document.getElementById('screenPinInput').value=''; document.getElementById('screenPinInput').focus(); }
+            else{ document.getElementById('adminLoginScreen').classList.add('hidden'); switchView('store'); }
         }
-
-        function cancelAdminLogin() { window.location.hash = ''; switchView('store'); }
-
-        function verifyScreenPin() {
-            if (document.getElementById('screenPinInput').value === "1234") {
-                document.getElementById('adminLoginScreen').classList.add('hidden');
-                switchView('admin');
-            } else { alert("Incorrect PIN! Try '1234'."); }
-        }
-
-        function switchView(v) {
-            if (v === 'store') {
-                document.getElementById('customerView').classList.remove('hidden');
-                document.getElementById('adminView').classList.add('hidden');
-            } else {
-                document.getElementById('customerView').classList.add('hidden');
-                document.getElementById('adminView').classList.remove('hidden');
-            }
-        }
-
-        function switchAdminTab(t) {
-            ['products', 'categories', 'orders', 'settings'].forEach(tab => {
-                document.getElementById(`adminSection${tab.charAt(0).toUpperCase() + tab.slice(1)}`).classList.add('hidden');
-            });
-            document.getElementById(`adminSection${t.charAt(0).toUpperCase() + t.slice(1)}`).classList.remove('hidden');
-        }
+        function cancelAdminLogin(){ window.location.hash=''; switchView('store'); }
+        function verifyScreenPin(){ if(document.getElementById('screenPinInput').value==="1234"){ document.getElementById('adminLoginScreen').classList.add('hidden'); switchView('admin'); } else alert("Incorrect PIN!"); }
+        function switchView(v){ if(v==='store'){ document.getElementById('customerView').classList.remove('hidden'); document.getElementById('adminView').classList.add('hidden'); } else { document.getElementById('customerView').classList.add('hidden'); document.getElementById('adminView').classList.remove('hidden'); } }
+        function switchAdminTab(t){ ['products','categories','orders','settings'].forEach(tab=>document.getElementById(`adminSection${tab.charAt(0).toUpperCase()+tab.slice(1)}`).classList.add('hidden')); document.getElementById(`adminSection${t.charAt(0).toUpperCase()+t.slice(1)}`).classList.remove('hidden'); }
 
         function renderCategoryPills() {
-            const container = document.getElementById('categoryPillsContainer');
-            const selectEl = document.getElementById('adminProdCategorySelect');
-            if (container) {
-                container.innerHTML = '';
-                categories.forEach(cat => {
-                    let btn = document.createElement('button');
-                    btn.className = `px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition ${activeCategoryFilter === cat ? 'bg-emerald-600 text-white' : 'bg-white border'}`;
-                    btn.innerText = cat;
-                    btn.onclick = () => { activeCategoryFilter = cat; renderCategoryPills(); renderCustomerProducts(); };
-                    container.appendChild(btn);
-                });
-            }
-            if (selectEl) {
-                selectEl.innerHTML = '';
-                categories.filter(c => c !== "All").forEach(cat => {
-                    let opt = document.createElement('option'); opt.value = cat; opt.innerText = cat; selectEl.appendChild(opt);
-                });
-            }
+            const container = document.getElementById('categoryPillsContainer'), selectEl = document.getElementById('adminProdCategorySelect');
+            if(container){ container.innerHTML=''; categories.forEach(cat=>{ let btn=document.createElement('button'); btn.className=`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition ${activeCategoryFilter===cat?'bg-emerald-600 text-white':'bg-white border'}`; btn.innerText=cat; btn.onclick=()=>{activeCategoryFilter=cat;renderCategoryPills();renderCustomerProducts();}; container.appendChild(btn); }); }
+            if(selectEl){ selectEl.innerHTML=''; categories.filter(c=>c!=="All").forEach(cat=>{ let opt=document.createElement('option'); opt.value=cat; opt.innerText=cat; selectEl.appendChild(opt); }); }
         }
 
         function renderCustomerProducts() {
-            const grid = document.getElementById('customerProductGrid');
-            const searchVal = document.getElementById('storeSearchInput').value.toLowerCase();
-            if (!grid) return;
-            grid.innerHTML = '';
-            const filtered = products.filter(p => (activeCategoryFilter === "All" || p.category === activeCategoryFilter) && ((p.name || '').toLowerCase().includes(searchVal)));
-            
-            filtered.forEach(p => {
-                let card = document.createElement('div');
-                card.className = "bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition border flex flex-col group cursor-pointer";
-                card.onclick = () => openProductModalView(p);
-                card.innerHTML = `
-                    <div class="relative h-44 sm:h-48 bg-slate-100 overflow-hidden">
-                        <img src="${p.image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60'}" class="w-full h-full object-cover group-hover:scale-105 transition">
-                        <span class="absolute top-2.5 left-2.5 bg-white/90 text-slate-800 text-[10px] font-bold px-2 py-1 rounded uppercase">${p.category}</span>
-                    </div>
-                    <div class="p-4 flex flex-col flex-grow justify-between space-y-2">
-                        <div>
-                            <h4 class="font-bold text-slate-900 text-sm line-clamp-1">${p.name}</h4>
-                            <p class="text-xs text-slate-500 line-clamp-2 mt-0.5">${p.desc}</p>
-                        </div>
-                        <div class="flex items-center justify-between pt-2 border-t">
-                            <span class="font-extrabold text-emerald-600 text-sm sm:text-base">₹${p.price}</span>
-                            <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold group-hover:bg-emerald-600 group-hover:text-white transition"><i class="fa-solid fa-plus text-xs"></i></span>
-                        </div>
-                    </div>
-                `;
+            const grid = document.getElementById('customerProductGrid'), searchVal = document.getElementById('storeSearchInput').value.toLowerCase();
+            if(!grid) return; grid.innerHTML='';
+            products.filter(p=>(activeCategoryFilter==="All"||p.category===activeCategoryFilter)&&((p.name||'').toLowerCase().includes(searchVal))).forEach(p=>{
+                let card=document.createElement('div'); card.className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition border flex flex-col group cursor-pointer"; card.onclick=()=>openProductModalView(p);
+                card.innerHTML=`<div class="relative h-44 sm:h-48 bg-slate-100 overflow-hidden"><img src="${p.image||'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60'}" class="w-full h-full object-cover group-hover:scale-105 transition"><span class="absolute top-2.5 left-2.5 bg-white/90 text-slate-800 text-[10px] font-bold px-2 py-1 rounded uppercase">${p.category}</span></div><div class="p-4 flex flex-col flex-grow justify-between space-y-2"><div><h4 class="font-bold text-slate-900 text-sm line-clamp-1">${p.name}</h4><p class="text-xs text-slate-500 line-clamp-2 mt-0.5">${p.desc}</p></div><div class="flex items-center justify-between pt-2 border-t"><span class="font-extrabold text-emerald-600 text-sm sm:text-base">₹${p.price}</span><span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold group-hover:bg-emerald-600 group-hover:text-white transition"><i class="fa-solid fa-plus text-xs"></i></span></div></div>`;
                 grid.appendChild(card);
             });
         }
+        function filterStoreProducts(){ renderCustomerProducts(); }
 
-        function filterStoreProducts() { renderCustomerProducts(); }
-
-        function openProductModalView(product) {
-            currentModalProduct = product; modalQty = 1;
-            let allImages = [product.image, ...(product.images || [])].filter(img => img && img.trim() !== "");
-
-            document.getElementById('modalProdMainImg').src = allImages[0] || '';
-            document.getElementById('modalProdCategory').innerText = product.category;
-            document.getElementById('modalProdName').innerText = product.name;
-            document.getElementById('modalProdSalePrice').innerText = `₹${product.price}`;
-            document.getElementById('modalProdMrpPrice').innerText = product.mrp ? `₹${product.mrp}` : '';
-            document.getElementById('modalProdGstBadge').innerText = `GST ${product.gstRate || 0}%`;
-            document.getElementById('modalProdDesc').innerText = product.desc || '';
-            document.getElementById('modalQtyVal').innerText = modalQty;
-
-            const thumbContainer = document.getElementById('modalThumbnails');
-            thumbContainer.innerHTML = '';
-            if (allImages.length > 1) {
-                thumbContainer.classList.remove('hidden');
-                allImages.forEach(img => {
-                    let t = document.createElement('img'); t.src = img;
-                    t.className = "w-14 h-14 rounded-lg object-cover cursor-pointer border hover:border-emerald-600 flex-shrink-0";
-                    t.onclick = () => document.getElementById('modalProdMainImg').src = img;
-                    thumbContainer.appendChild(t);
-                });
-            } else { thumbContainer.classList.add('hidden'); }
-
-            const vidBox = document.getElementById('modalVideoContainer');
-            if (product.video && product.video.trim() !== "") {
-                vidBox.classList.remove('hidden');
-                document.getElementById('modalVideoPlayer').src = product.video;
-            } else { vidBox.classList.add('hidden'); }
-
-            updateModalTotalPrice();
-            document.getElementById('productModal').classList.remove('hidden');
+        function openProductModalView(product){
+            currentModalProduct=product; modalQty=1;
+            let allImages=[product.image, ...(product.images||[])].filter(img=>img&&img.trim()!==""&&img!=="null"&&img!=="undefined");
+            document.getElementById('modalProdMainImg').src=allImages[0]||''; document.getElementById('modalProdCategory').innerText=product.category; document.getElementById('modalProdName').innerText=product.name; document.getElementById('modalProdSalePrice').innerText=`₹${product.price}`; document.getElementById('modalProdMrpPrice').innerText=product.mrp?`₹${product.mrp}`:''; document.getElementById('modalProdGstBadge').innerText=`GST ${product.gstRate||0}%`; document.getElementById('modalProdDesc').innerText=product.desc||''; document.getElementById('modalQtyVal').innerText=modalQty;
+            const thumbContainer=document.getElementById('modalThumbnails'); thumbContainer.innerHTML='';
+            if(allImages.length>1){ thumbContainer.classList.remove('hidden'); allImages.forEach(img=>{ let t=document.createElement('img'); t.src=img; t.className="w-14 h-14 rounded-lg object-cover cursor-pointer border hover:border-emerald-600 flex-shrink-0"; t.onclick=()=>document.getElementById('modalProdMainImg').src=img; thumbContainer.appendChild(t); }); } else thumbContainer.classList.add('hidden');
+            const vidBox=document.getElementById('modalVideoContainer');
+            if(product.video&&product.video.trim()!==""&&product.video!=="null"&&product.video!=="undefined"){ vidBox.classList.remove('hidden'); document.getElementById('modalVideoPlayer').src=product.video; } else vidBox.classList.add('hidden');
+            updateModalTotalPrice(); document.getElementById('productModal').classList.remove('hidden');
         }
+        function closeProductModal(){ document.getElementById('productModal').classList.add('hidden'); }
+        function adjustModalQty(c){ modalQty=Math.max(1,modalQty+c); document.getElementById('modalQtyVal').innerText=modalQty; updateModalTotalPrice(); }
+        function updateModalTotalPrice(){ document.getElementById('modalTotalBtnPrice').innerText=`₹${currentModalProduct.price*modalQty}`; }
 
-        function closeProductModal() { document.getElementById('productModal').classList.add('hidden'); }
-        function adjustModalQty(change) { modalQty = Math.max(1, modalQty + change); document.getElementById('modalQtyVal').innerText = modalQty; updateModalTotalPrice(); }
-        function updateModalTotalPrice() { document.getElementById('modalTotalBtnPrice').innerText = `₹${currentModalProduct.price * modalQty}`; }
-
-        function confirmAddToCart() {
-            cart.push({
-                cartItemId: Date.now() + Math.random(),
-                productId: currentModalProduct.id,
-                name: currentModalProduct.name,
-                price: currentModalProduct.price,
-                deliveryFee: currentModalProduct.deliveryFee || 50,
-                gstRate: currentModalProduct.gstRate || 0,
-                image: currentModalProduct.image,
-                quantity: modalQty
-            });
+        function confirmAddToCart(){
+            cart.push({cartItemId:Date.now()+Math.random(),productId:currentModalProduct.id,name:currentModalProduct.name,price:currentModalProduct.price,deliveryFee:currentModalProduct.deliveryFee||50,gstRate:currentModalProduct.gstRate||0,image:currentModalProduct.image,quantity:modalQty});
             closeProductModal(); updateCartBadge(); openCartDrawer();
         }
 
-        function openCartDrawer() { renderCartItems(); document.getElementById('cartDrawer').classList.remove('hidden'); document.getElementById('cartDrawer').classList.add('flex'); }
-        function closeCartDrawer() { document.getElementById('cartDrawer').classList.remove('flex'); document.getElementById('cartDrawer').classList.add('hidden'); }
-        function updateCartBadge() { document.getElementById('cartBadge').innerText = cart.reduce((s, i) => s + i.quantity, 0); }
+        function openCartDrawer(){ renderCartItems(); document.getElementById('cartDrawer').classList.remove('hidden'); document.getElementById('cartDrawer').classList.add('flex'); }
+        function closeCartDrawer(){ document.getElementById('cartDrawer').classList.remove('flex'); document.getElementById('cartDrawer').classList.add('hidden'); }
+        function updateCartBadge(){ document.getElementById('cartBadge').innerText=cart.reduce((s,i)=>s+i.quantity,0); }
 
-        function renderCartItems() {
-            const list = document.getElementById('cartItemsList'); list.innerHTML = '';
-            if (cart.length === 0) { list.innerHTML = `<div class="py-16 text-center text-slate-400 text-sm">Cart is empty.</div>`; updateCartTotals(); return; }
-            cart.forEach((item, index) => {
-                let div = document.createElement('div');
-                div.className = "flex items-center gap-3 bg-white p-3 rounded-2xl border shadow-sm";
-                div.innerHTML = `
-                    <img src="${item.image}" class="w-16 h-16 rounded-xl object-cover">
-                    <div class="flex-grow">
-                        <h4 class="font-bold text-slate-900 text-sm">${item.name}</h4>
-                        <span class="font-extrabold text-emerald-600 text-sm">₹${item.price * item.quantity} (Qty: ${item.quantity})</span>
-                    </div>
-                    <button onclick="cart.splice(${index},1); updateCartBadge(); renderCartItems();" class="text-red-500 text-xs px-2"><i class="fa-solid fa-trash"></i></button>
-                `;
+        function renderCartItems(){
+            const list=document.getElementById('cartItemsList'); list.innerHTML='';
+            if(cart.length===0){ list.innerHTML=`<div class="py-16 text-center text-slate-400 text-sm">Cart is empty.</div>`; updateCartTotals(); return; }
+            cart.forEach((item,index)=>{
+                let div=document.createElement('div'); div.className="flex items-center gap-3 bg-white p-3 rounded-2xl border shadow-sm";
+                div.innerHTML=`<img src="${item.image}" class="w-16 h-16 rounded-xl object-cover"><div class="flex-grow"><h4 class="font-bold text-slate-900 text-sm">${item.name}</h4><span class="font-extrabold text-emerald-600 text-sm">₹${item.price*item.quantity} (Qty: ${item.quantity})</span></div><button onclick="cart.splice(${index},1);updateCartBadge();renderCartItems();" class="text-red-500 text-xs px-2"><i class="fa-solid fa-trash"></i></button>`;
                 list.appendChild(div);
             });
             updateCartTotals();
         }
-
-        function updateCartTotals() {
-            let subtotal = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
-            let delivery = cart.reduce((s, i) => s + ((i.deliveryFee || 50) * i.quantity), 0);
-            document.getElementById('cartSubtotal').innerText = `₹${subtotal}`;
-            document.getElementById('cartTotalDelivery').innerText = `₹${delivery}`;
-            document.getElementById('cartGrandTotal').innerText = `₹${subtotal + delivery}`;
+        function updateCartTotals(){
+            let subtotal=cart.reduce((s,i)=>s+(i.price*i.quantity),0), delivery=cart.reduce((s,i)=>s+((i.deliveryFee||50)*i.quantity),0);
+            document.getElementById('cartSubtotal').innerText=`₹${subtotal}`; document.getElementById('cartTotalDelivery').innerText=`₹${delivery}`; document.getElementById('cartGrandTotal').innerText=`₹${subtotal+delivery}`;
+        }
+        function togglePaymentInstructions(){
+            const box=document.getElementById('paymentInstructionsBox');
+            let qrHtml=storeSettings.upiQr?`<div class="mt-1 text-center"><img src="${storeSettings.upiQr}" class="w-28 h-28 object-contain mx-auto rounded border"></div>`:'';
+            box.innerHTML=`Pay via UPI ID: <span class="font-bold text-emerald-800">${storeSettings.upiId||'ormagal@upi'}</span>${qrHtml}`;
         }
 
-        function togglePaymentInstructions() {
-            const box = document.getElementById('paymentInstructionsBox');
-            let qrHtml = storeSettings.upiQr ? `<div class="mt-1 text-center"><img src="${storeSettings.upiQr}" class="w-28 h-28 object-contain mx-auto rounded border"></div>` : '';
-            box.innerHTML = `Pay via UPI ID: <span class="font-bold text-emerald-800">${storeSettings.upiId || 'ormagal@upi'}</span>${qrHtml}`;
-        }
-
-        function placeWhatsAppOrder() {
-            if (cart.length === 0) { alert("Cart is empty!"); return; }
-            const name = document.getElementById('checkoutName').value.trim();
-            const phone = document.getElementById('checkoutPhone').value.trim();
-            const address = document.getElementById('checkoutAddress').value.trim();
-            if (!name || !phone || !address) { alert("Please fill delivery details."); return; }
-
-            let subtotal = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
-            let delivery = cart.reduce((s, i) => s + ((i.deliveryFee || 50) * i.quantity), 0);
-            let grandTotal = subtotal + delivery;
-
-            let orderText = `🛒 *NEW ORDER - Ormagal Stores*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n`;
-            cart.forEach(i => { orderText += `• ${i.name} x ${i.quantity} = ₹${i.price * i.quantity}\n`; });
-            orderText += `Total: ₹${grandTotal}`;
-
-            let newOrder = {
-                id: Date.now(),
-                date: new Date().toLocaleString(),
-                customerName: name,
-                customerPhone: phone,
-                address,
-                items: [...cart],
-                total: grandTotal
-            };
-            orders.unshift(newOrder);
-            localStorage.setItem('ormagal_orders_v13', JSON.stringify(orders));
-            renderAdminOrders();
-
-            let receiptHtml = `
-                <p><strong>Customer:</strong> ${name} (${phone})</p>
-                <p><strong>Delivery Address:</strong> ${address}</p>
-                <div class="border-t my-1 pt-1"></div>
-                <p><strong>Total Amount:</strong> ₹${grandTotal}</p>
-                <p class="text-slate-500 text-[10px]">Order saved successfully!</p>
-            `;
-            document.getElementById('receiptDetailsBox').innerHTML = receiptHtml;
-
-            cart = [];
-            updateCartBadge();
-            closeCartDrawer();
-
-            let waUrl = `https://wa.me/${storeSettings.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(orderText)}`;
-            document.getElementById('whatsappShareBtn').href = waUrl;
+        function placeWhatsAppOrder(){
+            if(cart.length===0){ alert("Cart is empty!"); return; }
+            const name=document.getElementById('checkoutName').value.trim(), phone=document.getElementById('checkoutPhone').value.trim(), address=document.getElementById('checkoutAddress').value.trim();
+            if(!name||!phone||!address){ alert("Please fill delivery details."); return; }
+            let subtotal=cart.reduce((s,i)=>s+(i.price*i.quantity),0), delivery=cart.reduce((s,i)=>s+((i.deliveryFee||50)*i.quantity),0), grandTotal=subtotal+delivery;
+            let orderText=`🛒 *NEW ORDER - Ormagal Stores*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n`;
+            cart.forEach(i=>{orderText+=`• ${i.name} x ${i.quantity} = ₹${i.price*i.quantity}\n`;});
+            orderText+=`Total: ₹${grandTotal}`;
+            orders.unshift({id:Date.now(),date:new Date().toLocaleString(),customerName:name,customerPhone:phone,address,items:[...cart],total:grandTotal});
+            localStorage.setItem('ormagal_orders_v14',JSON.stringify(orders)); renderAdminOrders();
+            document.getElementById('receiptDetailsBox').innerHTML=`<p><strong>Customer:</strong> ${name} (${phone})</p><p><strong>Address:</strong> ${address}</p><div class="border-t my-1 pt-1"></div><p><strong>Total:</strong> ₹${grandTotal}</p>`;
+            cart=[]; updateCartBadge(); closeCartDrawer();
+            document.getElementById('whatsappShareBtn').href=`https://wa.me/${storeSettings.whatsapp.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(orderText)}`;
             document.getElementById('orderConfirmationModal').classList.remove('hidden');
         }
+        function closeOrderConfirmation(){ document.getElementById('orderConfirmationModal').classList.add('hidden'); }
 
-        function closeOrderConfirmation() {
-            document.getElementById('orderConfirmationModal').classList.add('hidden');
-        }
-
-        function renderAdminProducts() {
-            const table = document.getElementById('adminProductTable'); if (!table) return;
-            table.innerHTML = '';
-            if (products.length === 0) { table.innerHTML = `<div class="col-span-full py-6 text-center text-slate-400 text-xs">No products found.</div>`; return; }
-            products.forEach(p => {
-                let card = document.createElement('div');
-                card.className = "bg-white p-4 rounded-2xl border flex justify-between items-center";
-                card.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <img src="${p.image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60'}" class="w-12 h-12 rounded-lg object-cover">
-                        <div>
-                            <h4 class="font-bold text-sm">${p.name}</h4>
-                            <span class="text-emerald-600 text-xs font-bold">₹${p.price} (GST: ${p.gstRate || 0}%)</span>
-                        </div>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="editProduct(${p.id})" class="bg-slate-100 px-2.5 py-1.5 rounded-lg text-xs font-semibold">Edit</button>
-                        <button onclick="deleteProduct(${p.id})" class="bg-red-50 text-red-600 px-2.5 py-1.5 rounded-lg text-xs font-semibold">Delete</button>
-                    </div>
-                `;
+        function renderAdminProducts(){
+            const table=document.getElementById('adminProductTable'); if(!table) return; table.innerHTML='';
+            if(products.length===0){ table.innerHTML=`<div class="col-span-full py-6 text-center text-slate-400 text-xs">No products found.</div>`; return; }
+            products.forEach(p=>{
+                let card=document.createElement('div'); card.className="bg-white p-4 rounded-2xl border flex justify-between items-center";
+                card.innerHTML=`<div class="flex items-center gap-3"><img src="${p.image||'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60'}" class="w-12 h-12 rounded-lg object-cover"><div><h4 class="font-bold text-sm">${p.name}</h4><span class="text-emerald-600 text-xs font-bold">₹${p.price}</span></div></div><div class="flex gap-2"><button onclick="editProduct(${p.id})" class="bg-slate-100 px-2.5 py-1.5 rounded-lg text-xs font-semibold">Edit</button><button onclick="deleteProduct(${p.id})" class="bg-red-50 text-red-600 px-2.5 py-1.5 rounded-lg text-xs font-semibold">Delete</button></div>`;
                 table.appendChild(card);
             });
         }
 
-        function openProductModal(prodId = null) {
-            document.getElementById('editProdId').value = prodId || '';
-            tempExtraImages = ["", "", ""];
-            tempVideoData = "";
-            document.getElementById('adminProdExtraImagesBase64').value = "";
-            document.getElementById('adminProdVideoBase64').value = "";
-            document.getElementById('extraImg1').value = "";
-            document.getElementById('extraImg2').value = "";
-            document.getElementById('extraImg3').value = "";
-            document.getElementById('adminProdVideoFile').value = "";
-
-            if (prodId) {
-                let p = products.find(item => item.id == prodId);
-                if (p) {
-                    document.getElementById('adminModalTitle').innerText = "Edit Product";
-                    document.getElementById('adminProdName').value = p.name;
-                    document.getElementById('adminProdCategorySelect').value = p.category;
-                    document.getElementById('adminProdMrp').value = p.mrp || '';
-                    document.getElementById('adminProdSale').value = p.price;
-                    document.getElementById('adminProdDelivery').value = p.deliveryFee || 50;
-                    document.getElementById('adminProdGst').value = p.gstRate || 0;
-                    document.getElementById('adminProdImgBase64').value = p.image || '';
-                    document.getElementById('adminProdDesc').value = p.desc || '';
-                    tempExtraImages = p.images || ["", "", ""];
-                    tempVideoData = p.video || "";
+        function openProductModal(prodId=null){
+            document.getElementById('editProdId').value=prodId||''; tempExtraImages=["","",""]; tempVideoData="";
+            document.getElementById('adminProdExtraImagesBase64').value=""; document.getElementById('adminProdVideoBase64').value="";
+            document.getElementById('extraImg1').value=""; document.getElementById('extraImg2').value=""; document.getElementById('extraImg3').value=""; document.getElementById('adminProdVideoFile').value="";
+            if(prodId){
+                let p=products.find(item=>item.id==prodId);
+                if(p){
+                    document.getElementById('adminModalTitle').innerText="Edit Product"; document.getElementById('adminProdName').value=p.name; document.getElementById('adminProdCategorySelect').value=p.category; document.getElementById('adminProdMrp').value=p.mrp||''; document.getElementById('adminProdSale').value=p.price; document.getElementById('adminProdDelivery').value=p.deliveryFee||50; document.getElementById('adminProdGst').value=p.gstRate||0; document.getElementById('adminProdImgBase64').value=p.image||''; document.getElementById('adminProdDesc').value=p.desc||''; tempExtraImages=p.images||["","",""]; tempVideoData=p.video||"";
                 }
             } else {
-                document.getElementById('adminModalTitle').innerText = "Add Product";
-                document.getElementById('adminProdName').value = '';
-                document.getElementById('adminProdMrp').value = '';
-                document.getElementById('adminProdSale').value = '';
-                document.getElementById('adminProdDelivery').value = '50';
-                document.getElementById('adminProdGst').value = '0';
-                document.getElementById('adminProdImgBase64').value = '';
-                document.getElementById('adminProdDesc').value = '';
+                document.getElementById('adminModalTitle').innerText="Add Product"; document.getElementById('adminProdName').value=''; document.getElementById('adminProdMrp').value=''; document.getElementById('adminProdSale').value=''; document.getElementById('adminProdDelivery').value='50'; document.getElementById('adminProdGst').value='0'; document.getElementById('adminProdImgBase64').value=''; document.getElementById('adminProdDesc').value='';
             }
             document.getElementById('adminProdModal').classList.remove('hidden');
         }
+        function closeAdminProdModal(){ document.getElementById('adminProdModal').classList.add('hidden'); }
+        document.getElementById('adminProdImgFile').addEventListener('change', function(e){ let reader=new FileReader(); reader.onload=ev=>document.getElementById('adminProdImgBase64').value=ev.target.result; if(e.target.files[0]) reader.readAsDataURL(e.target.files[0]); });
+        function handleExtraImage(e, index){ if(!e.target.files[0]) return; let reader=new FileReader(); reader.onload=ev=>{ tempExtraImages[index]=ev.target.result; document.getElementById('adminProdExtraImagesBase64').value=JSON.stringify(tempExtraImages); }; reader.readAsDataURL(e.target.files[0]); }
+        function handleVideoUpload(e){ if(!e.target.files[0]) return; let reader=new FileReader(); reader.onload=ev=>{ tempVideoData=ev.target.result; document.getElementById('adminProdVideoBase64').value=ev.target.result; }; reader.readAsDataURL(e.target.files[0]); }
 
-        function closeAdminProdModal() { document.getElementById('adminProdModal').classList.add('hidden'); }
-
-        document.getElementById('adminProdImgFile').addEventListener('change', function(e) {
-            let reader = new FileReader();
-            reader.onload = ev => document.getElementById('adminProdImgBase64').value = ev.target.result;
-            if (e.target.files[0]) reader.readAsDataURL(e.target.files[0]);
-        });
-
-        function handleExtraImage(e, index) {
-            if (!e.target.files[0]) return;
-            let reader = new FileReader();
-            reader.onload = ev => {
-                tempExtraImages[index] = ev.target.result;
-                document.getElementById('adminProdExtraImagesBase64').value = JSON.stringify(tempExtraImages);
-            };
-            reader.readAsDataURL(e.target.files[0]);
-        }
-
-        function handleVideoUpload(e) {
-            if (!e.target.files[0]) return;
-            let reader = new FileReader();
-            reader.onload = ev => {
-                tempVideoData = ev.target.result;
-                document.getElementById('adminProdVideoBase64').value = ev.target.result;
-            };
-            reader.readAsDataURL(e.target.files[0]);
-        }
-
-        function saveAdminProduct() {
-            const id = document.getElementById('editProdId').value;
-            const name = document.getElementById('adminProdName').value.trim();
-            const price = parseFloat(document.getElementById('adminProdSale').value) || 0;
-            if (!name || !price) { alert("Name and Price required."); return; }
-
-            let primaryImg = document.getElementById('adminProdImgBase64').value;
-            let extraImgs = document.getElementById('adminProdExtraImagesBase64').value ? JSON.parse(document.getElementById('adminProdExtraImagesBase64').value) : tempExtraImages;
-            let videoData = document.getElementById('adminProdVideoBase64').value || tempVideoData;
-
-            if (id) {
-                let p = products.find(item => item.id == id);
-                if (p) {
-                    p.name = name;
-                    p.category = document.getElementById('adminProdCategorySelect').value;
-                    p.mrp = parseFloat(document.getElementById('adminProdMrp').value) || 0;
-                    p.price = price;
-                    p.deliveryFee = parseFloat(document.getElementById('adminProdDelivery').value) || 50;
-                    p.gstRate = parseFloat(document.getElementById('adminProdGst').value) || 0;
-                    if (primaryImg) p.image = primaryImg;
-                    p.images = extraImgs.filter(img => img && img.trim() !== "");
-                    if (videoData) p.video = videoData;
-                    p.desc = document.getElementById('adminProdDesc').value.trim();
-                }
+        function saveAdminProduct(){
+            const id=document.getElementById('editProdId').value, name=document.getElementById('adminProdName').value.trim(), price=parseFloat(document.getElementById('adminProdSale').value)||0;
+            if(!name||!price){ alert("Name and Price required."); return; }
+            let primaryImg=document.getElementById('adminProdImgBase64').value, extraImgs=document.getElementById('adminProdExtraImagesBase64').value?JSON.parse(document.getElementById('adminProdExtraImagesBase64').value):tempExtraImages, videoData=document.getElementById('adminProdVideoBase64').value||tempVideoData;
+            if(id){
+                let p=products.find(item=>item.id==id);
+                if(p){ p.name=name; p.category=document.getElementById('adminProdCategorySelect').value; p.mrp=parseFloat(document.getElementById('adminProdMrp').value)||0; p.price=price; p.deliveryFee=parseFloat(document.getElementById('adminProdDelivery').value)||50; p.gstRate=parseFloat(document.getElementById('adminProdGst').value)||0; if(primaryImg) p.image=primaryImg; p.images=extraImgs.filter(img=>img&&img.trim()!==""&&img!=="null"); if(videoData) p.video=videoData; p.desc=document.getElementById('adminProdDesc').value.trim(); }
             } else {
-                let newP = {
-                    id: Date.now(),
-                    name,
-                    category: document.getElementById('adminProdCategorySelect').value,
-                    mrp: parseFloat(document.getElementById('adminProdMrp').value) || 0,
-                    price,
-                    deliveryFee: parseFloat(document.getElementById('adminProdDelivery').value) || 50,
-                    gstRate: parseFloat(document.getElementById('adminProdGst').value) || 0,
-                    image: primaryImg || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60',
-                    images: extraImgs.filter(img => img && img.trim() !== ""),
-                    video: videoData || "",
-                    desc: document.getElementById('adminProdDesc').value.trim()
-                };
-                products.push(newP);
+                products.push({id:Date.now(),name,category:document.getElementById('adminProdCategorySelect').value,mrp:parseFloat(document.getElementById('adminProdMrp').value)||0,price,deliveryFee:parseFloat(document.getElementById('adminProdDelivery').value)||50,gstRate:parseFloat(document.getElementById('adminProdGst').value)||0,image:primaryImg||'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60',images:extraImgs.filter(img=>img&&img.trim()!==""&&img!=="null"),video:videoData||"",desc:document.getElementById('adminProdDesc').value.trim()});
             }
-
-            syncProductsToCloud();
-            renderCustomerProducts();
-            renderAdminProducts();
-            closeAdminProdModal();
+            syncProductsToCloud(); renderCustomerProducts(); renderAdminProducts(); closeAdminProdModal();
         }
+        function editProduct(id){ openProductModal(id); }
+        function deleteProduct(id){ products=products.filter(p=>p.id!=id); syncProductsToCloud(); renderCustomerProducts(); renderAdminProducts(); }
 
-        function editProduct(id) { openProductModal(id); }
-
-        function deleteProduct(id) {
-            products = products.filter(p => p.id != id);
-            syncProductsToCloud();
-            renderCustomerProducts();
-            renderAdminProducts();
-        }
-
-        function applyStoreSettings() {
-            document.getElementById('navStoreName').innerText = storeSettings.name;
-            document.getElementById('navTagline').innerText = storeSettings.tagline;
-            document.getElementById('marqueeText').innerText = storeSettings.announcement;
-
-            document.getElementById('settingStoreName').value = storeSettings.name;
-            document.getElementById('settingWhatsapp').value = storeSettings.whatsapp;
-            document.getElementById('settingTagline').value = storeSettings.tagline;
-            document.getElementById('settingGstn').value = storeSettings.gstn;
-            document.getElementById('settingBankName').value = storeSettings.bankName;
-            document.getElementById('settingBankAcc').value = storeSettings.bankAcc;
-            document.getElementById('settingIfsc').value = storeSettings.ifsc;
-            document.getElementById('settingUpiId').value = storeSettings.upiId;
-            document.getElementById('settingAnnouncement').value = storeSettings.announcement;
-
-            if (storeSettings.logo) {
-                document.getElementById('navLogoImg').src = storeSettings.logo;
-                document.getElementById('navLogoImg').classList.remove('hidden');
-                document.getElementById('navLogoPlaceholder').classList.add('hidden');
-            }
-            if (storeSettings.banner) {
-                document.getElementById('bannerContainer').style.backgroundImage = `url('${storeSettings.banner}')`;
-            }
+        function applyStoreSettings(){
+            document.getElementById('navStoreName').innerText=storeSettings.name; document.getElementById('navTagline').innerText=storeSettings.tagline; document.getElementById('marqueeText').innerText=storeSettings.announcement;
+            document.getElementById('settingStoreName').value=storeSettings.name; document.getElementById('settingWhatsapp').value=storeSettings.whatsapp; document.getElementById('settingTagline').value=storeSettings.tagline; document.getElementById('settingGstn').value=storeSettings.gstn; document.getElementById('settingBankName').value=storeSettings.bankName; document.getElementById('settingBankAcc').value=storeSettings.bankAcc; document.getElementById('settingIfsc').value=storeSettings.ifsc; document.getElementById('settingUpiId').value=storeSettings.upiId; document.getElementById('settingAnnouncement').value=storeSettings.announcement;
+            if(storeSettings.logo){ document.getElementById('navLogoImg').src=storeSettings.logo; document.getElementById('navLogoImg').classList.remove('hidden'); document.getElementById('navLogoPlaceholder').classList.add('hidden'); }
+            if(storeSettings.banner) document.getElementById('bannerContainer').style.backgroundImage=`url('${storeSettings.banner}')`;
             togglePaymentInstructions();
         }
-
-        function saveStoreSettings() {
-            storeSettings.name = document.getElementById('settingStoreName').value;
-            storeSettings.whatsapp = document.getElementById('settingWhatsapp').value;
-            storeSettings.tagline = document.getElementById('settingTagline').value;
-            storeSettings.gstn = document.getElementById('settingGstn').value;
-            storeSettings.bankName = document.getElementById('settingBankName').value;
-            storeSettings.bankAcc = document.getElementById('settingBankAcc').value;
-            storeSettings.ifsc = document.getElementById('settingIfsc').value;
-            storeSettings.upiId = document.getElementById('settingUpiId').value;
-            storeSettings.announcement = document.getElementById('settingAnnouncement').value;
-
-            localStorage.setItem('ormagal_settings_v13', JSON.stringify(storeSettings));
-            applyStoreSettings();
-            alert("Settings saved successfully!");
+        function saveStoreSettings(){
+            storeSettings.name=document.getElementById('settingStoreName').value; storeSettings.whatsapp=document.getElementById('settingWhatsapp').value; storeSettings.tagline=document.getElementById('settingTagline').value; storeSettings.gstn=document.getElementById('settingGstn').value; storeSettings.bankName=document.getElementById('settingBankName').value; storeSettings.bankAcc=document.getElementById('settingBankAcc').value; storeSettings.ifsc=document.getElementById('settingIfsc').value; storeSettings.upiId=document.getElementById('settingUpiId').value; storeSettings.announcement=document.getElementById('settingAnnouncement').value;
+            localStorage.setItem('ormagal_settings_v14',JSON.stringify(storeSettings)); applyStoreSettings(); alert("Settings saved!");
         }
+        function handleLogoUpload(e){ let r=new FileReader(); r.onload=ev=>{storeSettings.logo=ev.target.result;localStorage.setItem('ormagal_settings_v14',JSON.stringify(storeSettings));applyStoreSettings();}; if(e.target.files[0]) r.readAsDataURL(e.target.files[0]); }
+        function handleBannerUpload(e){ let r=new FileReader(); r.onload=ev=>{storeSettings.banner=ev.target.result;localStorage.setItem('ormagal_settings_v14',JSON.stringify(storeSettings));applyStoreSettings();}; if(e.target.files[0]) r.readAsDataURL(e.target.files[0]); }
+        function handleUpiQrUpload(e){ let r=new FileReader(); r.onload=ev=>{storeSettings.upiQr=ev.target.result;localStorage.setItem('ormagal_settings_v14',JSON.stringify(storeSettings));togglePaymentInstructions();alert("QR Uploaded!");}; if(e.target.files[0]) r.readAsDataURL(e.target.files[0]); }
 
-        function handleLogoUpload(e) {
-            let reader = new FileReader();
-            reader.onload = ev => { storeSettings.logo = ev.target.result; localStorage.setItem('ormagal_settings_v13', JSON.stringify(storeSettings)); applyStoreSettings(); };
-            if (e.target.files[0]) reader.readAsDataURL(e.target.files[0]);
-        }
-
-        function handleBannerUpload(e) {
-            let reader = new FileReader();
-            reader.onload = ev => { storeSettings.banner = ev.target.result; localStorage.setItem('ormagal_settings_v13', JSON.stringify(storeSettings)); applyStoreSettings(); };
-            if (e.target.files[0]) reader.readAsDataURL(e.target.files[0]);
-        }
-
-        function handleUpiQrUpload(e) {
-            let reader = new FileReader();
-            reader.onload = ev => { storeSettings.upiQr = ev.target.result; localStorage.setItem('ormagal_settings_v13', JSON.stringify(storeSettings)); togglePaymentInstructions(); alert("QR Uploaded!"); };
-            if (e.target.files[0]) reader.readAsDataURL(e.target.files[0]);
-        }
-
-        function renderAdminCategories() {
-            const list = document.getElementById('adminCategoryList');
-            if (!list) return;
-            list.innerHTML = '';
-            categories.filter(c => c !== "All").forEach(cat => {
-                let div = document.createElement('div');
-                div.className = "flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-xl text-xs font-semibold";
-                div.innerHTML = `<span>${cat}</span> <button onclick="deleteCategory('${cat}')" class="text-red-500 font-bold ml-1">×</button>`;
-                list.appendChild(div);
+        function renderAdminCategories(){
+            const list=document.getElementById('adminCategoryList'); if(!list) return; list.innerHTML='';
+            categories.filter(c=>c!=="All").forEach(cat=>{
+                let div=document.createElement('div'); div.className="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-xl text-xs font-semibold";
+                div.innerHTML=`<span>${cat}</span><button onclick="deleteCategory('${cat}')" class="text-red-500 font-bold ml-1">×</button>`; list.appendChild(div);
             });
         }
-
-        function addNewCategory() {
-            const input = document.getElementById('newCategoryInput');
-            const val = input.value.trim();
-            if (val && !categories.includes(val)) {
-                categories.push(val);
-                localStorage.setItem('ormagal_categories_v13', JSON.stringify(categories));
-                input.value = '';
-                renderCategoryPills();
-                renderAdminCategories();
-            }
-        }
-
-        function deleteCategory(cat) {
-            categories = categories.filter(c => c !== cat);
-            localStorage.setItem('ormagal_categories_v13', JSON.stringify(categories));
-            renderCategoryPills();
-            renderAdminCategories();
-        }
-
-        function renderAdminOrders() {
-            const list = document.getElementById('adminOrdersList');
-            if (!list) return;
-            list.innerHTML = '';
-            if (orders.length === 0) { list.innerHTML = `<div class="py-6 text-center text-slate-400 text-xs">No orders recorded yet.</div>`; return; }
-            orders.forEach(o => {
-                let div = document.createElement('div');
-                div.className = "bg-white p-4 rounded-xl border text-xs space-y-1";
-                div.innerHTML = `<strong class="text-slate-900">${o.customerName} (${o.customerPhone})</strong> - ₹${o.total} <br><span class="text-slate-500">${o.date}</span>`;
-                list.appendChild(div);
-            });
-        }
-
-        function clearAllOrders() { orders = []; localStorage.setItem('ormagal_orders_v13', JSON.stringify(orders)); renderAdminOrders(); }
+        function addNewCategory(){ const input=document.getElementById('newCategoryInput'), val=input.value.trim(); if(val&&!categories.includes(val)){ categories.push(val); localStorage.setItem('ormagal_categories_v14',JSON.stringify(categories)); input.value=''; renderCategoryPills(); renderAdminCategories(); } }
+        function deleteCategory(cat){ categories=categories.filter(c=>c!==cat); localStorage.setItem('ormagal_categories_v14',JSON.stringify(categories)); renderCategoryPills(); renderAdminCategories(); }
+        function renderAdminOrders(){ const list=document.getElementById('adminOrdersList'); if(!list) return; list.innerHTML=''; if(orders.length===0){ list.innerHTML=`<div class="py-6 text-center text-slate-400 text-xs">No orders recorded yet.</div>`; return; } orders.forEach(o=>{ let div=document.createElement('div'); div.className="bg-white p-4 rounded-xl border text-xs space-y-1"; div.innerHTML=`<strong class="text-slate-900">${o.customerName} (${o.customerPhone})</strong> - ₹${o.total} <br><span class="text-slate-500">${o.date}</span>`; list.appendChild(div); }); }
+        function clearAllOrders(){ orders=[]; localStorage.setItem('ormagal_orders_v14',JSON.stringify(orders)); renderAdminOrders(); }
     </script>
 </body>
 </html>
