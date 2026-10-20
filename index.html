@@ -28,43 +28,66 @@
         </div>
     </header>
     <main class="flex-grow max-w-6xl w-full mx-auto p-4 sm:p-6">
+        <!-- In-Screen Admin Login -->
         <div id="adminLoginScreen" class="hidden max-w-md mx-auto mt-12 bg-white p-8 rounded-3xl shadow-xl border text-center space-y-4">
             <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold"><i class="fa-solid fa-lock"></i></div>
             <h3 class="font-bold text-xl text-slate-900">Admin Authentication</h3><p class="text-xs text-slate-500">Enter PIN (1234)</p>
             <input type="password" id="screenPinInput" maxlength="4" class="w-36 text-center text-2xl tracking-widest px-4 py-2 border rounded-xl font-bold mx-auto block focus:outline-none">
             <div class="flex gap-2 pt-2"><button onclick="cancelAdminLogin()" class="flex-1 bg-slate-100 py-2.5 rounded-xl text-xs font-semibold">Cancel</button><button onclick="verifyScreenPin()" class="flex-1 bg-emerald-600 text-white py-2.5 rounded-xl text-xs font-semibold">Login</button></div>
         </div>
+
+        <!-- Customer Store View -->
         <div id="customerView" class="space-y-6">
-            <div id="bannerContainer" class="relative rounded-2xl overflow-hidden shadow-md bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 text-white p-6 sm:p-10 border bg-cover bg-center min-h-[160px] flex items-center">
-                <div class="relative z-10 max-w-xl space-y-2"><span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs px-3 py-1 rounded-full font-semibold uppercase">Official Store</span><h2 class="text-2xl sm:text-3xl font-extrabold">Ormagal Digital Showcase</h2></div>
+            <div id="bannerContainer" class="relative rounded-2xl overflow-hidden shadow-md bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 text-white p-6 sm:p-10 border bg-cover bg-center min-h-[140px] flex items-center">
+                <div class="relative z-10 max-w-xl space-y-1"><span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs px-3 py-1 rounded-full font-semibold uppercase">Official Store</span><h2 class="text-xl sm:text-2xl font-extrabold">Ormagal Digital Showcase</h2></div>
             </div>
             <div class="flex flex-col sm:flex-row gap-3 items-center justify-between">
                 <div class="relative w-full sm:w-80"><i class="fa-solid fa-search absolute left-3.5 top-3.5 text-slate-400 text-sm"></i><input type="text" id="storeSearchInput" oninput="filterStoreProducts()" placeholder="Search..." class="w-full pl-10 pr-4 py-2.5 bg-white border rounded-xl text-sm focus:outline-none"></div>
                 <div id="categoryPillsContainer" class="flex items-center gap-2 overflow-x-auto w-full pb-2"></div>
             </div>
-            <div id="customerProductGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"></div>
+            <div id="customerProductGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"></div>
         </div>
+
+        <!-- Admin View -->
         <div id="adminView" class="hidden space-y-6">
             <div class="bg-white rounded-2xl p-2 shadow-sm border flex flex-wrap gap-2 items-center justify-between">
                 <div class="flex flex-wrap gap-2 flex-grow">
                     <button onclick="switchAdminTab('products')" id="adminTabProducts" class="py-2.5 px-4 rounded-xl font-semibold text-sm bg-emerald-600 text-white">Products</button>
                     <button onclick="switchAdminTab('categories')" id="adminTabCategories" class="py-2.5 px-4 rounded-xl font-semibold text-sm text-slate-600">Categories</button>
+                    <button onclick="switchAdminTab('coupons')" id="adminTabCoupons" class="py-2.5 px-4 rounded-xl font-semibold text-sm text-slate-600">Coupons</button>
                     <button onclick="switchAdminTab('orders')" id="adminTabOrders" class="py-2.5 px-4 rounded-xl font-semibold text-sm text-slate-600">Orders</button>
-                    <button onclick="switchAdminTab('settings')" id="adminTabSettings" class="py-2.5 px-4 rounded-xl font-semibold text-sm text-slate-600">Store Settings</button>
+                    <button onclick="switchAdminTab('settings')" id="adminTabSettings" class="py-2.5 px-4 rounded-xl font-semibold text-sm text-slate-600">Settings</button>
                 </div>
                 <button onclick="switchView('store')" class="bg-slate-100 text-slate-800 px-4 py-2.5 rounded-xl font-semibold text-xs">Exit</button>
             </div>
+            
             <div id="adminSectionProducts" class="space-y-4">
                 <div class="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border"><h3 class="font-bold text-lg">Manage Products</h3><button onclick="openProductModal()" class="bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-sm font-semibold">Add Product</button></div>
                 <div id="adminProductTable" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             </div>
+
             <div id="adminSectionCategories" class="hidden space-y-4">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border max-w-xl space-y-4"><h3 class="font-bold text-lg">Categories</h3><div class="flex gap-2"><input type="text" id="newCategoryInput" placeholder="Name" class="flex-grow px-4 py-2 border rounded-xl text-sm"><button onclick="addNewCategory()" class="bg-emerald-600 text-white px-4 py-2 rounded-xl text-sm font-semibold">Add</button></div><div id="adminCategoryList" class="flex flex-wrap gap-2"></div></div>
             </div>
+
+            <!-- Coupons Tab -->
+            <div id="adminSectionCoupons" class="hidden space-y-4">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border max-w-xl space-y-4">
+                    <h3 class="font-bold text-lg">Discount Coupons Management</h3>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" id="newCouponCode" placeholder="Code (e.g. FESTIVE5)" class="px-4 py-2 border rounded-xl text-sm uppercase font-bold">
+                        <select id="newCouponRate" class="px-4 py-2 border rounded-xl text-sm bg-white"><option value="0.05">5% Off</option><option value="0.10">10% Off</option><option value="0.15">15% Off</option><option value="0.20">20% Off</option></select>
+                    </div>
+                    <button onclick="addNewCoupon()" class="w-full bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-semibold shadow">Add Coupon</button>
+                    <div id="adminCouponList" class="space-y-2 pt-2"></div>
+                </div>
+            </div>
+
             <div id="adminSectionOrders" class="hidden space-y-4">
-                <div class="bg-white p-4 rounded-2xl shadow-sm border flex justify-between items-center"><h3 class="font-bold text-lg">Private Cloud Orders Ledger</h3><button onclick="clearAllOrders()" class="text-red-600 text-xs font-semibold">Clear Local</button></div>
+                <div class="bg-white p-4 rounded-2xl shadow-sm border flex justify-between items-center"><h3 class="font-bold text-lg">Cloud Orders Ledger</h3><button onclick="clearAllOrders()" class="text-red-600 text-xs font-semibold">Clear Local</button></div>
                 <div id="adminOrdersList" class="space-y-3"></div>
             </div>
+
             <div id="adminSectionSettings" class="hidden space-y-4">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border max-w-2xl space-y-4">
                     <h3 class="font-bold text-lg border-b pb-2">Settings</h3>
@@ -80,17 +103,17 @@
         </div>
     </main>
 
-    <!-- Product View Modal -->
+    <!-- Optimized Product Details Modal Popup -->
     <div id="productModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
-            <div class="relative h-64 bg-slate-100 rounded-2xl overflow-hidden"><img id="modalProdMainImg" src="" class="w-full h-full object-cover"><button onclick="closeProductModal()" class="absolute top-4 right-4 bg-white/80 w-9 h-9 rounded-full flex items-center justify-center shadow"><i class="fa-solid fa-xmark"></i></button></div>
+        <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl p-5 space-y-3 max-h-[90vh] overflow-y-auto">
+            <div class="relative h-48 bg-slate-100 rounded-2xl overflow-hidden"><img id="modalProdMainImg" src="" class="w-full h-full object-cover"><button onclick="closeProductModal()" class="absolute top-3 right-3 bg-white/80 w-8 h-8 rounded-full flex items-center justify-center shadow"><i class="fa-solid fa-xmark"></i></button></div>
             <div id="modalThumbnails" class="flex gap-2 overflow-x-auto pb-1 hidden"></div>
-            <div id="modalVideoContainer" class="hidden"><video id="modalVideoPlayer" class="w-full h-48 rounded-xl object-cover" controls></video></div>
-            <div><span id="modalProdCategory" class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg">Category</span><h3 id="modalProdName" class="text-xl font-bold mt-1">Title</h3><div class="flex items-center gap-3 mt-1"><span id="modalProdSalePrice" class="text-xl font-extrabold text-emerald-600">₹0</span><span id="modalProdMrpPrice" class="text-sm text-slate-400 line-through">₹0</span><span id="modalProdGstBadge" class="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">GST 0%</span></div></div>
-            <p id="modalProdDesc" class="text-xs text-slate-600 leading-relaxed"></p>
+            <div id="modalVideoContainer" class="hidden"><video id="modalVideoPlayer" class="w-full h-36 rounded-xl object-cover" controls></video></div>
+            <div><span id="modalProdCategory" class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg">Category</span><h3 id="modalProdName" class="text-lg font-bold mt-1">Title</h3><div class="flex items-center gap-2 mt-1"><span id="modalProdSalePrice" class="text-lg font-extrabold text-emerald-600">₹0</span><span id="modalProdMrpPrice" class="text-xs text-slate-400 line-through">₹0</span><span id="modalProdGstBadge" class="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">GST 0%</span></div></div>
+            <p id="modalProdDesc" class="text-xs text-slate-600 leading-relaxed bg-slate-50 p-3 rounded-xl"></p>
             <div id="modalStockStatus" class="text-xs font-bold"></div>
-            <div id="modalQuantitySection" class="flex items-center justify-between pt-2"><span class="text-sm font-bold">Quantity</span><div class="flex items-center gap-3 bg-slate-100 px-3 py-1.5 rounded-xl"><button onclick="adjustModalQty(-1)" class="w-7 h-7 bg-white rounded-lg font-bold">-</button><span id="modalQtyVal" class="font-bold text-sm w-6 text-center">1</span><button onclick="adjustModalQty(1)" class="w-7 h-7 bg-white rounded-lg font-bold">+</button></div></div>
-            <button id="modalAddCartBtn" onclick="confirmAddToCart()" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold shadow-lg flex items-center justify-center gap-2"><i class="fa-solid fa-cart-plus"></i> Add to Cart • <span id="modalTotalBtnPrice">₹0</span></button>
+            <div id="modalQuantitySection" class="flex items-center justify-between pt-1"><span class="text-xs font-bold">Quantity</span><div class="flex items-center gap-3 bg-slate-100 px-3 py-1 rounded-xl"><button onclick="adjustModalQty(-1)" class="w-6 h-6 bg-white rounded-lg font-bold text-xs">-</button><span id="modalQtyVal" class="font-bold text-xs w-5 text-center">1</span><button onclick="adjustModalQty(1)" class="w-6 h-6 bg-white rounded-lg font-bold text-xs">+</button></div></div>
+            <button id="modalAddCartBtn" onclick="confirmAddToCart()" class="w-full bg-emerald-600 text-white py-2.5 rounded-xl font-bold shadow-lg flex items-center justify-center gap-2 text-xs"><i class="fa-solid fa-cart-plus"></i> Add to Cart • <span id="modalTotalBtnPrice">₹0</span></button>
         </div>
     </div>
 
@@ -125,9 +148,8 @@
                     <input type="tel" id="checkoutPhone" placeholder="WhatsApp Phone *" class="w-full px-3 py-2 bg-white border rounded-xl">
                     <textarea id="checkoutAddress" rows="2" placeholder="Delivery Address *" class="w-full px-3 py-2 bg-white border rounded-xl"></textarea>
                     
-                    <!-- Coupon Code Option -->
                     <div class="flex gap-2">
-                        <input type="text" id="couponInput" placeholder="Coupon (e.g. FESTIVE5, FESTIVE10)" class="flex-grow px-3 py-2 border rounded-xl uppercase font-bold text-xs">
+                        <input type="text" id="couponInput" placeholder="Coupon Code" class="flex-grow px-3 py-2 border rounded-xl uppercase font-bold text-xs">
                         <button onclick="applyCoupon()" class="bg-slate-900 text-white px-3 py-2 rounded-xl font-semibold">Apply</button>
                     </div>
 
@@ -144,11 +166,11 @@
         </div>
     </div>
 
-    <!-- TakeApp Style Receipt Modal with PDF Download -->
+    <!-- TakeApp Style Receipt Modal -->
     <div id="orderConfirmationModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto" id="printableReceipt">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl">
             <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold"><i class="fa-solid fa-check"></i></div>
-            <h3 class="font-bold text-xl">Order Placed & Logged Securely!</h3><p class="text-xs text-slate-500">Review your receipt below:</p>
+            <h3 class="font-bold text-xl">Order Placed Successfully!</h3><p class="text-xs text-slate-500">Review receipt below and send confirmation via WhatsApp:</p>
             <div id="receiptDetailsBox" class="bg-slate-50 p-4 rounded-2xl text-left text-xs space-y-2 border"></div>
             <div class="flex gap-2">
                 <button onclick="window.print()" class="flex-1 bg-slate-900 text-white py-2.5 rounded-xl font-semibold text-xs"><i class="fa-solid fa-file-pdf"></i> Download PDF</button>
@@ -160,14 +182,26 @@
 
     <script>
         const GAS_API_URL = "https://script.google.com/macros/s/AKfycbytTlha_jOSl9LinS8UHhxV4FoBZeWky1GYSlpCIWrRrVgjHZS-RrgTKsQRw2Obgo3PVA/exec";
-        let storeSettings = JSON.parse(localStorage.getItem('ormagal_settings_v15')) || {name:"Ormagal Stores",whatsapp:"+919513095508",tagline:"Memories for a Better Tomorrow",gstn:"UnderRegistration",bankName:"Ormagal Stores",bankAcc:"9513095508",ifsc:"ORMA0001234",upiId:"ormagal@upi",upiQr:"",logo:"",banner:"",announcement:"Special festive discounts live now!"};
-        let categories = JSON.parse(localStorage.getItem('ormagal_categories_v15')) || ["All","Groceries","Electronics","Home & Living"];
-        let products = [], orders = JSON.parse(localStorage.getItem('ormagal_orders_v15')) || [], cart = [], activeCategoryFilter = "All", currentModalProduct = null, modalQty = 1, tempExtraImages = ["","",""], tempVideoData = "", appliedDiscountRate = 0;
+        let storeSettings = JSON.parse(localStorage.getItem('ormagal_settings_v16')) || {name:"Ormagal Stores",whatsapp:"+919513095508",tagline:"Memories for a Better Tomorrow",gstn:"UnderRegistration",bankName:"Ormagal Stores",bankAcc:"9513095508",ifsc:"ORMA0001234",upiId:"ormagal@upi",upiQr:"",logo:"",banner:"",announcement:"Special festive discounts live now!"};
+        let categories = JSON.parse(localStorage.getItem('ormagal_categories_v16')) || ["All","Groceries","Electronics","Home & Living"];
+        let coupons = JSON.parse(localStorage.getItem('ormagal_coupons_v16')) || [{code:"FESTIVE5", discountRate:0.05},{code:"FESTIVE10", discountRate:0.10}];
+        let products = [], orders = JSON.parse(localStorage.getItem('ormagal_orders_v16')) || [], cart = [], activeCategoryFilter = "All", currentModalProduct = null, modalQty = 1, tempExtraImages = ["","",""], tempVideoData = "", appliedDiscountRate = 0;
 
-        window.onload = function() { applyStoreSettings(); fetchLiveProducts(); renderCategoryPills(); renderAdminCategories(); renderAdminOrders(); updateCartBadge(); togglePaymentInstructions(); checkAdminHashRoute(); window.addEventListener('hashchange', checkAdminHashRoute); };
+        window.onload = function() { applyStoreSettings(); fetchLiveProducts(); renderCategoryPills(); renderAdminCategories(); renderAdminCoupons(); renderAdminOrders(); updateCartBadge(); togglePaymentInstructions(); checkAdminHashRoute(); window.addEventListener('hashchange', checkAdminHashRoute); };
 
-        async function fetchLiveProducts() { try { let res = await fetch(GAS_API_URL); let data = await res.json(); if(data && data.products) products = data.products; } catch(e){} renderCustomerProducts(); renderAdminProducts(); }
+        async function fetchLiveProducts() {
+            try {
+                let res = await fetch(GAS_API_URL);
+                let data = await res.json();
+                if(data && data.products) products = data.products;
+                if(data && data.coupons && data.coupons.length > 0) { coupons = data.coupons; localStorage.setItem('ormagal_coupons_v16', JSON.stringify(coupons)); }
+            } catch(e){}
+            renderCustomerProducts();
+            renderAdminProducts();
+        }
+
         async function syncProductsToCloud() { try { await fetch(GAS_API_URL, {method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:"products", products:products})}); } catch(e){} }
+        async function syncCouponsToCloud() { try { await fetch(GAS_API_URL, {method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:"coupons", coupons:coupons})}); } catch(e){} }
         async function logOrderToCloud(orderData) { try { await fetch(GAS_API_URL, {method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:"order", order:orderData})}); } catch(e){} }
 
         function checkAdminHashRoute() {
@@ -177,7 +211,7 @@
         function cancelAdminLogin(){ window.location.hash=''; switchView('store'); }
         function verifyScreenPin(){ if(document.getElementById('screenPinInput').value==="1234"){ document.getElementById('adminLoginScreen').classList.add('hidden'); switchView('admin'); } else alert("Incorrect PIN!"); }
         function switchView(v){ if(v==='store'){ document.getElementById('customerView').classList.remove('hidden'); document.getElementById('adminView').classList.add('hidden'); } else { document.getElementById('customerView').classList.add('hidden'); document.getElementById('adminView').classList.remove('hidden'); } }
-        function switchAdminTab(t){ ['products','categories','orders','settings'].forEach(tab=>document.getElementById(`adminSection${tab.charAt(0).toUpperCase()+tab.slice(1)}`).classList.add('hidden')); document.getElementById(`adminSection${t.charAt(0).toUpperCase()+t.slice(1)}`).classList.remove('hidden'); }
+        function switchAdminTab(t){ ['products','categories','coupons','orders','settings'].forEach(tab=>document.getElementById(`adminSection${tab.charAt(0).toUpperCase()+tab.slice(1)}`).classList.add('hidden')); document.getElementById(`adminSection${t.charAt(0).toUpperCase()+t.slice(1)}`).classList.remove('hidden'); }
 
         function renderCategoryPills() {
             const container = document.getElementById('categoryPillsContainer'), selectEl = document.getElementById('adminProdCategorySelect');
@@ -191,7 +225,7 @@
             products.filter(p=>(activeCategoryFilter==="All"||p.category===activeCategoryFilter)&&((p.name||'').toLowerCase().includes(searchVal))).forEach(p=>{
                 let card=document.createElement('div'); card.className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition border flex flex-col group cursor-pointer"; card.onclick=()=>openProductModalView(p);
                 let stockBadge = p.inStock === false ? `<span class="absolute top-2.5 right-2.5 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded">Out of Stock</span>` : '';
-                card.innerHTML=`<div class="relative h-44 sm:h-48 bg-slate-100 overflow-hidden"><img src="${p.image||'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60'}" class="w-full h-full object-cover group-hover:scale-105 transition"><span class="absolute top-2.5 left-2.5 bg-white/90 text-slate-800 text-[10px] font-bold px-2 py-1 rounded uppercase">${p.category}</span>${stockBadge}</div><div class="p-4 flex flex-col flex-grow justify-between space-y-2"><div><h4 class="font-bold text-slate-900 text-sm line-clamp-1">${p.name}</h4><p class="text-xs text-slate-500 line-clamp-2 mt-0.5">${p.desc}</p></div><div class="flex items-center justify-between pt-2 border-t"><span class="font-extrabold text-emerald-600 text-sm sm:text-base">₹${p.price}</span><span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold group-hover:bg-emerald-600 group-hover:text-white transition"><i class="fa-solid fa-plus text-xs"></i></span></div></div>`;
+                card.innerHTML=`<div class="relative h-36 sm:h-40 bg-slate-100 overflow-hidden"><img src="${p.image||'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60'}" class="w-full h-full object-cover group-hover:scale-105 transition"><span class="absolute top-2.5 left-2.5 bg-white/90 text-slate-800 text-[10px] font-bold px-2 py-1 rounded uppercase">${p.category}</span>${stockBadge}</div><div class="p-3 flex flex-col flex-grow justify-between space-y-1"><div><h4 class="font-bold text-slate-900 text-xs sm:text-sm line-clamp-1">${p.name}</h4><p class="text-[11px] text-slate-500 line-clamp-1">${p.desc}</p></div><div class="flex items-center justify-between pt-1 border-t"><span class="font-extrabold text-emerald-600 text-sm">₹${p.price}</span><span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold group-hover:bg-emerald-600 group-hover:text-white transition"><i class="fa-solid fa-plus text-xs"></i></span></div></div>`;
                 grid.appendChild(card);
             });
         }
@@ -200,7 +234,7 @@
         function openProductModalView(product){
             currentModalProduct=product; modalQty=1;
             let allImages=[product.image, ...(product.images||[])].filter(img=>img&&img.trim()!==""&&img!=="null"&&img!=="undefined");
-            document.getElementById('modalProdMainImg').src=allImages[0]||''; document.getElementById('modalProdCategory').innerText=product.category; document.getElementById('modalProdName').innerText=product.name; document.getElementById('modalProdSalePrice').innerText=`₹${product.price}`; document.getElementById('modalProdMrpPrice').innerText=product.mrp?`₹${product.mrp}`:''; document.getElementById('modalProdGstBadge').innerText=`GST ${product.gstRate||0}%`; document.getElementById('modalProdDesc').innerText=product.desc||''; document.getElementById('modalQtyVal').innerText=modalQty;
+            document.getElementById('modalProdMainImg').src=allImages[0]||''; document.getElementById('modalProdCategory').innerText=product.category; document.getElementById('modalProdName').innerText=product.name; document.getElementById('modalProdSalePrice').innerText=`₹${product.price}`; document.getElementById('modalProdMrpPrice').innerText=product.mrp?`₹${product.mrp}`:''; document.getElementById('modalProdGstBadge').innerText=`GST ${product.gstRate||0}%`; document.getElementById('modalProdDesc').innerText=product.desc||'No description available.'; document.getElementById('modalQtyVal').innerText=modalQty;
             
             const stockDiv = document.getElementById('modalStockStatus'), qtySec = document.getElementById('modalQuantitySection'), addBtn = document.getElementById('modalAddCartBtn');
             if(product.inStock === false){
@@ -212,7 +246,12 @@
             }
 
             const thumbContainer=document.getElementById('modalThumbnails'); thumbContainer.innerHTML='';
-            if(allImages.length>1){ thumbContainer.classList.remove('hidden'); allImages.forEach(img=>{ let t=document.createElement('img'); t.src=img; t.className="w-14 h-14 rounded-lg object-cover cursor-pointer border hover:border-emerald-600 flex-shrink-0"; t.onclick=()=>document.getElementById('modalProdMainImg').src=img; thumbContainer.appendChild(t); }); } else thumbContainer.classList.add('hidden');
+            let validThumbs = allImages.filter(img => img && img.trim() !== "" && img !== "null");
+            if(validThumbs.length > 1){
+                thumbContainer.classList.remove('hidden');
+                validThumbs.forEach(img=>{ let t=document.createElement('img'); t.src=img; t.className="w-12 h-12 rounded-lg object-cover cursor-pointer border hover:border-emerald-600 flex-shrink-0"; t.onclick=()=>document.getElementById('modalProdMainImg').src=img; thumbContainer.appendChild(t); });
+            } else { thumbContainer.classList.add('hidden'); }
+
             const vidBox=document.getElementById('modalVideoContainer');
             if(product.video&&product.video.trim()!==""&&product.video!=="null"&&product.video!=="undefined"){ vidBox.classList.remove('hidden'); document.getElementById('modalVideoPlayer').src=product.video; } else vidBox.classList.add('hidden');
             updateModalTotalPrice(); document.getElementById('productModal').classList.remove('hidden');
@@ -243,8 +282,8 @@
 
         function applyCoupon(){
             let code = document.getElementById('couponInput').value.trim().toUpperCase();
-            if(code === "FESTIVE5"){ appliedDiscountRate = 0.05; alert("5% Discount Applied!"); }
-            else if(code === "FESTIVE10"){ appliedDiscountRate = 0.10; alert("10% Discount Applied!"); }
+            let matched = coupons.find(c => c.code === code);
+            if(matched){ appliedDiscountRate = matched.discountRate; alert(`${(matched.discountRate * 100)}% Discount Applied!`); }
             else { appliedDiscountRate = 0; alert("Invalid Coupon Code"); }
             updateCartTotals();
         }
@@ -253,14 +292,9 @@
             let subtotal=cart.reduce((s,i)=>s+(i.price*i.quantity),0), delivery=cart.reduce((s,i)=>s+((i.deliveryFee||50)*i.quantity),0);
             let discountAmt = subtotal * appliedDiscountRate;
             let grandTotal = subtotal - discountAmt + delivery;
-
             document.getElementById('cartSubtotal').innerText=`₹${subtotal}`;
-            if(discountAmt > 0){
-                document.getElementById('discountRow').classList.remove('hidden');
-                document.getElementById('cartDiscount').innerText=`-₹${discountAmt.toFixed(2)}`;
-            } else { document.getElementById('discountRow').classList.add('hidden'); }
-            document.getElementById('cartTotalDelivery').innerText=`₹${delivery}`; 
-            document.getElementById('cartGrandTotal').innerText=`₹${grandTotal.toFixed(2)}`;
+            if(discountAmt > 0){ document.getElementById('discountRow').classList.remove('hidden'); document.getElementById('cartDiscount').innerText=`-₹${discountAmt.toFixed(2)}`; } else { document.getElementById('discountRow').classList.add('hidden'); }
+            document.getElementById('cartTotalDelivery').innerText=`₹${delivery}`; document.getElementById('cartGrandTotal').innerText=`₹${grandTotal.toFixed(2)}`;
         }
 
         function togglePaymentInstructions(){
@@ -274,7 +308,6 @@
             const name=document.getElementById('checkoutName').value.trim(), phone=document.getElementById('checkoutPhone').value.trim(), address=document.getElementById('checkoutAddress').value.trim();
             if(!name||!phone||!address){ alert("Please fill delivery details."); return; }
             let subtotal=cart.reduce((s,i)=>s+(i.price*i.quantity),0), discountAmt = subtotal * appliedDiscountRate, delivery=cart.reduce((s,i)=>s+((i.deliveryFee||50)*i.quantity),0), grandTotal=subtotal - discountAmt + delivery;
-            
             let itemsSummary = cart.map(i => `${i.name} x ${i.quantity}`).join(', ');
             let orderText=`🛒 *NEW ORDER - Ormagal Stores*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n`;
             cart.forEach(i=>{orderText+=`• ${i.name} x ${i.quantity} = ₹${i.price*i.quantity}\n`;});
@@ -282,10 +315,7 @@
             orderText+=`Total: ₹${grandTotal.toFixed(2)}`;
 
             let newOrder = {id:Date.now(), date:new Date().toLocaleString(), customerName:name, customerPhone:phone, address, itemsSummary, total: grandTotal.toFixed(2)};
-            orders.unshift(newOrder);
-            localStorage.setItem('ormagal_orders_v15',JSON.stringify(orders)); 
-            renderAdminOrders();
-            logOrderToCloud(newOrder); // Securely saves to Google Sheet Orders tab
+            orders.unshift(newOrder); localStorage.setItem('ormagal_orders_v16',JSON.stringify(orders)); renderAdminOrders(); logOrderToCloud(newOrder);
 
             document.getElementById('receiptDetailsBox').innerHTML=`<p><strong>Customer:</strong> ${name} (${phone})</p><p><strong>Address:</strong> ${address}</p><div class="border-t my-1 pt-1"></div><p><strong>Total:</strong> ₹${grandTotal.toFixed(2)}</p>`;
             cart=[]; updateCartBadge(); closeCartDrawer();
@@ -341,6 +371,33 @@
         function editProduct(id){ openProductModal(id); }
         function deleteProduct(id){ products=products.filter(p=>p.id!=id); syncProductsToCloud(); renderCustomerProducts(); renderAdminProducts(); }
 
+        function renderAdminCoupons(){
+            const list = document.getElementById('adminCouponList'); if(!list) return; list.innerHTML = '';
+            if(coupons.length === 0){ list.innerHTML = `<p class="text-xs text-slate-400">No coupons added yet.</p>`; return; }
+            coupons.forEach((c, idx)=>{
+                let div = document.createElement('div'); div.className = "flex justify-between items-center bg-slate-50 p-2.5 rounded-xl border text-xs";
+                div.innerHTML = `<span><strong>${c.code}</strong> (${c.discountRate * 100}% Off)</span> <button onclick="deleteCoupon(${idx})" class="text-red-500 font-bold">×</button>`;
+                list.appendChild(div);
+            });
+        }
+        function addNewCoupon(){
+            let code = document.getElementById('newCouponCode').value.trim().toUpperCase();
+            let rate = parseFloat(document.getElementById('newCouponRate').value);
+            if(code && !coupons.some(c => c.code === code)){
+                coupons.push({ code, discountRate: rate });
+                localStorage.setItem('ormagal_coupons_v16', JSON.stringify(coupons));
+                document.getElementById('newCouponCode').value = '';
+                renderAdminCoupons();
+                syncCouponsToCloud();
+            } else { alert("Provide a unique coupon code."); }
+        }
+        function deleteCoupon(idx){
+            coupons.splice(idx, 1);
+            localStorage.setItem('ormagal_coupons_v16', JSON.stringify(coupons));
+            renderAdminCoupons();
+            syncCouponsToCloud();
+        }
+
         function applyStoreSettings(){
             document.getElementById('navStoreName').innerText=storeSettings.name; document.getElementById('navTagline').innerText=storeSettings.tagline; document.getElementById('marqueeText').innerText=storeSettings.announcement;
             document.getElementById('settingStoreName').value=storeSettings.name; document.getElementById('settingWhatsapp').value=storeSettings.whatsapp; document.getElementById('settingTagline').value=storeSettings.tagline; document.getElementById('settingGstn').value=storeSettings.gstn; document.getElementById('settingBankName').value=storeSettings.bankName; document.getElementById('settingBankAcc').value=storeSettings.bankAcc; document.getElementById('settingIfsc').value=storeSettings.ifsc; document.getElementById('settingUpiId').value=storeSettings.upiId; document.getElementById('settingAnnouncement').value=storeSettings.announcement;
@@ -350,11 +407,11 @@
         }
         function saveStoreSettings(){
             storeSettings.name=document.getElementById('settingStoreName').value; storeSettings.whatsapp=document.getElementById('settingWhatsapp').value; storeSettings.tagline=document.getElementById('settingTagline').value; storeSettings.gstn=document.getElementById('settingGstn').value; storeSettings.bankName=document.getElementById('settingBankName').value; storeSettings.bankAcc=document.getElementById('settingBankAcc').value; storeSettings.ifsc=document.getElementById('settingIfsc').value; storeSettings.upiId=document.getElementById('settingUpiId').value; storeSettings.announcement=document.getElementById('settingAnnouncement').value;
-            localStorage.setItem('ormagal_settings_v15',JSON.stringify(storeSettings)); applyStoreSettings(); alert("Settings saved!");
+            localStorage.setItem('ormagal_settings_v16',JSON.stringify(storeSettings)); applyStoreSettings(); alert("Settings saved!");
         }
-        function handleLogoUpload(e){ let r=new FileReader(); r.onload=ev=>{storeSettings.logo=ev.target.result;localStorage.setItem('ormagal_settings_v15',JSON.stringify(storeSettings));applyStoreSettings();}; if(e.target.files[0]) r.readAsDataURL(e.target.files[0]); }
-        function handleBannerUpload(e){ let r=new FileReader(); r.onload=ev=>{storeSettings.banner=ev.target.result;localStorage.setItem('ormagal_settings_v15',JSON.stringify(storeSettings));applyStoreSettings();}; if(e.target.files[0]) r.readAsDataURL(e.target.files[0]); }
-        function handleUpiQrUpload(e){ let r=new FileReader(); r.onload=ev=>{storeSettings.upiQr=ev.target.result;localStorage.setItem('ormagal_settings_v15',JSON.stringify(storeSettings));togglePaymentInstructions();alert("QR Uploaded!");}; if(e.target.files[0]) r.readAsDataURL(e.target.files[0]); }
+        function handleLogoUpload(e){ let r=new FileReader(); r.onload=ev=>{storeSettings.logo=ev.target.result;localStorage.setItem('ormagal_settings_v16',JSON.stringify(storeSettings));applyStoreSettings();}; if(e.target.files[0]) r.readAsDataURL(e.target.files[0]); }
+        function handleBannerUpload(e){ let r=new FileReader(); r.onload=ev=>{storeSettings.banner=ev.target.result;localStorage.setItem('ormagal_settings_v16',JSON.stringify(storeSettings));applyStoreSettings();}; if(e.target.files[0]) r.readAsDataURL(e.target.files[0]); }
+        function handleUpiQrUpload(e){ let r=new FileReader(); r.onload=ev=>{storeSettings.upiQr=ev.target.result;localStorage.setItem('ormagal_settings_v16',JSON.stringify(storeSettings));togglePaymentInstructions();alert("QR Uploaded!");}; if(e.target.files[0]) r.readAsDataURL(e.target.files[0]); }
 
         function renderAdminCategories(){
             const list=document.getElementById('adminCategoryList'); if(!list) return; list.innerHTML='';
@@ -363,10 +420,10 @@
                 div.innerHTML=`<span>${cat}</span><button onclick="deleteCategory('${cat}')" class="text-red-500 font-bold ml-1">×</button>`; list.appendChild(div);
             });
         }
-        function addNewCategory(){ const input=document.getElementById('newCategoryInput'), val=input.value.trim(); if(val&&!categories.includes(val)){ categories.push(val); localStorage.setItem('ormagal_categories_v15',JSON.stringify(categories)); input.value=''; renderCategoryPills(); renderAdminCategories(); } }
-        function deleteCategory(cat){ categories=categories.filter(c=>c!==cat); localStorage.setItem('ormagal_categories_v15',JSON.stringify(categories)); renderCategoryPills(); renderAdminCategories(); }
+        function addNewCategory(){ const input=document.getElementById('newCategoryInput'), val=input.value.trim(); if(val&&!categories.includes(val)){ categories.push(val); localStorage.setItem('ormagal_categories_v16',JSON.stringify(categories)); input.value=''; renderCategoryPills(); renderAdminCategories(); } }
+        function deleteCategory(cat){ categories=categories.filter(c=>c!==cat); localStorage.setItem('ormagal_categories_v16',JSON.stringify(categories)); renderCategoryPills(); renderAdminCategories(); }
         function renderAdminOrders(){ const list=document.getElementById('adminOrdersList'); if(!list) return; list.innerHTML=''; if(orders.length===0){ list.innerHTML=`<div class="py-6 text-center text-slate-400 text-xs">No orders recorded yet.</div>`; return; } orders.forEach(o=>{ let div=document.createElement('div'); div.className="bg-white p-4 rounded-xl border text-xs space-y-1"; div.innerHTML=`<strong class="text-slate-900">${o.customerName} (${o.customerPhone})</strong> - ₹${o.total} <br><span class="text-slate-500">${o.date}</span>`; list.appendChild(div); }); }
-        function clearAllOrders(){ orders=[]; localStorage.setItem('ormagal_orders_v15',JSON.stringify(orders)); renderAdminOrders(); }
+        function clearAllOrders(){ orders=[]; localStorage.setItem('ormagal_orders_v16',JSON.stringify(orders)); renderAdminOrders(); }
     </script>
 </body>
 </html>
