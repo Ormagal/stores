@@ -21,7 +21,7 @@
     <!-- Top Announcement Bar -->
     <div class="bg-emerald-900 text-emerald-100 text-xs py-1.5 px-4 text-center font-medium flex items-center justify-center gap-2">
         <i class="fa-solid fa-store text-amber-400"></i>
-        <span id="topAnnouncementStore">Official Ormagal Stores Online Retail Hub • Fast WhatsApp Checkout</span>
+        <span>Official Ormagal Stores Online Retail Hub • Fast WhatsApp Checkout</span>
     </div>
 
     <!-- Marquee -->
@@ -57,7 +57,7 @@
 
     <main class="flex-grow max-w-6xl w-full mx-auto p-4 sm:p-6">
         
-        <!-- IN-SCREEN ADMIN LOGIN SCREEN (Triggered by #admin) -->
+        <!-- IN-SCREEN ADMIN LOGIN -->
         <div id="adminLoginScreen" class="hidden max-w-md mx-auto mt-12 bg-white p-8 rounded-3xl shadow-xl border border-slate-200 text-center space-y-4">
             <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
                 <i class="fa-solid fa-lock"></i>
@@ -73,11 +73,10 @@
 
         <!-- Customer Store View -->
         <div id="customerView" class="space-y-6">
-            <div id="bannerContainer" class="relative rounded-2xl overflow-hidden shadow-md bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 text-white p-6 sm:p-10 border border-slate-800 bg-cover bg-center">
-                <div class="relative z-10 max-w-xl space-y-3">
+            <div id="bannerContainer" class="relative rounded-2xl overflow-hidden shadow-md bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 text-white p-6 sm:p-10 border border-slate-800 bg-cover bg-center min-h-[160px] flex items-center">
+                <div class="relative z-10 max-w-xl space-y-2">
                     <span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wider inline-block">Official Store</span>
-                    <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight">Quality Retail & Essentials</h2>
-                    <p id="bannerPromoText" class="text-slate-300 text-sm sm:text-base">Browse our curated collection across multiple categories. Fast WhatsApp ordering & doorstep delivery.</p>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Ormagal Digital Showcase</h2>
                 </div>
             </div>
 
@@ -174,13 +173,16 @@
                 <button onclick="closeProductModal()" class="absolute top-4 right-4 bg-white/80 hover:bg-white text-slate-800 w-9 h-9 rounded-full flex items-center justify-center shadow"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div id="modalThumbnails" class="flex gap-2 overflow-x-auto pb-1"></div>
-            <div id="modalVideoContainer" class="hidden"><iframe id="modalVideoFrame" class="w-full h-48 rounded-xl" src="" frameborder="0" allowfullscreen></iframe></div>
+            <div id="modalVideoContainer" class="hidden">
+                <video id="modalVideoPlayer" class="w-full h-48 rounded-xl object-cover" controls></video>
+            </div>
             <div>
                 <span id="modalProdCategory" class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg">Category</span>
                 <h3 id="modalProdName" class="text-xl font-bold text-slate-900 mt-1">Title</h3>
                 <div class="flex items-center gap-3 mt-1">
                     <span id="modalProdSalePrice" class="text-xl font-extrabold text-emerald-600">₹0</span>
                     <span id="modalProdMrpPrice" class="text-sm font-semibold text-slate-400 line-through">₹0</span>
+                    <span id="modalProdGstBadge" class="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">GST 0%</span>
                 </div>
             </div>
             <p id="modalProdDesc" class="text-xs text-slate-600 leading-relaxed"></p>
@@ -198,13 +200,14 @@
         </div>
     </div>
 
-    <!-- Admin Add Product Modal -->
+    <!-- Admin Add/Edit Product Modal -->
     <div id="adminProdModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b pb-3">
-                <h3 class="font-bold text-lg text-slate-900">Add Product</h3>
+                <h3 id="adminModalTitle" class="font-bold text-lg text-slate-900">Add Product</h3>
                 <button onclick="closeAdminProdModal()" class="text-slate-400"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
+            <input type="hidden" id="editProdId">
             <div class="space-y-3">
                 <div><label class="block text-xs font-bold mb-1">Product Name</label><input type="text" id="adminProdName" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
                 <div><label class="block text-xs font-bold mb-1">Category</label><select id="adminProdCategorySelect" class="w-full px-4 py-2 border rounded-xl text-sm bg-white"></select></div>
@@ -212,9 +215,37 @@
                     <div><label class="block text-xs font-bold mb-1">MRP (₹)</label><input type="number" id="adminProdMrp" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
                     <div><label class="block text-xs font-bold mb-1">Sale Price (₹)</label><input type="number" id="adminProdSale" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
                 </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="block text-xs font-bold mb-1">Delivery Charge (₹)</label><input type="number" id="adminProdDelivery" class="w-full px-4 py-2 border rounded-xl text-sm" value="50"></div>
+                    <div><label class="block text-xs font-bold mb-1">GST Rate (%)</label>
+                        <select id="adminProdGst" class="w-full px-4 py-2 border rounded-xl text-sm bg-white">
+                            <option value="0">0%</option>
+                            <option value="5">5%</option>
+                            <option value="12">12%</option>
+                            <option value="18">18%</option>
+                        </select>
+                    </div>
+                </div>
                 <div><label class="block text-xs font-bold mb-1">Primary Image File</label><input type="file" id="adminProdImgFile" accept="image/*" class="w-full text-xs"><input type="hidden" id="adminProdImgBase64"></div>
-                <div><label class="block text-xs font-bold mb-1">Extra Image URLs (Comma Separated)</label><input type="text" id="adminProdExtraImages" class="w-full px-4 py-2 border rounded-xl text-sm" placeholder="https://img2.jpg, https://img3.jpg"></div>
-                <div><label class="block text-xs font-bold mb-1">Video URL (YouTube Embed)</label><input type="text" id="adminProdVideo" class="w-full px-4 py-2 border rounded-xl text-sm" placeholder="https://www.youtube.com/embed/..."></div>
+                
+                <!-- Upload Options for Extra Images (1, 2, 3) -->
+                <div class="border-t pt-2">
+                    <label class="block text-xs font-bold mb-1 text-emerald-700 uppercase">Extra Images (Upload up to 3)</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <input type="file" id="extraImg1" accept="image/*" onchange="handleExtraImage(event, 0)" class="w-full text-[10px]">
+                        <input type="file" id="extraImg2" accept="image/*" onchange="handleExtraImage(event, 1)" class="w-full text-[10px]">
+                        <input type="file" id="extraImg3" accept="image/*" onchange="handleExtraImage(event, 2)" class="w-full text-[10px]">
+                    </div>
+                    <input type="hidden" id="adminProdExtraImagesBase64">
+                </div>
+
+                <!-- Video File Upload Option -->
+                <div>
+                    <label class="block text-xs font-bold mb-1 text-emerald-700 uppercase">Product Video (Upload File)</label>
+                    <input type="file" id="adminProdVideoFile" accept="video/*" onchange="handleVideoUpload(event)" class="w-full text-xs">
+                    <input type="hidden" id="adminProdVideoBase64">
+                </div>
+
                 <div><label class="block text-xs font-bold mb-1">Description</label><textarea id="adminProdDesc" rows="2" class="w-full px-4 py-2 border rounded-xl text-sm"></textarea></div>
             </div>
             <div class="pt-4 border-t flex justify-end gap-2">
@@ -257,9 +288,24 @@
                     <div class="flex justify-between font-extrabold text-base text-slate-900 pt-1 border-t"><span>Total</span><span id="cartGrandTotal" class="text-emerald-600">₹0</span></div>
                 </div>
                 <button onclick="placeWhatsAppOrder()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-bold shadow-lg transition flex items-center justify-center gap-2 text-sm">
-                    <i class="fa-brands fa-whatsapp text-lg"></i> Send Order via WhatsApp
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Complete Order
                 </button>
             </div>
+        </div>
+    </div>
+
+    <!-- Alternative Order Confirmation Modal (Bypasses WhatsApp direct launch block) -->
+    <div id="orderConfirmationModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl">
+            <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="font-bold text-xl text-slate-900">Order Placed Successfully!</h3>
+            <p class="text-xs text-slate-500">Click below to instantly share your order confirmation with the store via WhatsApp:</p>
+            <a id="whatsappShareBtn" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-bold shadow-lg transition flex items-center justify-center gap-2 text-sm">
+                <i class="fa-brands fa-whatsapp text-lg"></i> Send Order to WhatsApp Now
+            </a>
+            <button onclick="closeOrderConfirmation()" class="w-full bg-slate-100 text-slate-700 py-2.5 rounded-xl text-xs font-semibold">Close</button>
         </div>
     </div>
 
@@ -267,7 +313,7 @@
     <script>
         const GAS_API_URL = "https://script.google.com/macros/s/AKfycbytTlha_jOSl9LinS8UHhxV4FoBZeWky1GYSlpCIWrRrVgjHZS-RrgTKsQRw2Obgo3PVA/exec";
 
-        let storeSettings = JSON.parse(localStorage.getItem('ormagal_settings_v11')) || {
+        let storeSettings = JSON.parse(localStorage.getItem('ormagal_settings_v12')) || {
             name: "Ormagal Stores",
             whatsapp: "+91 95130 95508",
             tagline: "Memories for a Better Tomorrow",
@@ -282,13 +328,14 @@
             announcement: "Special festive discounts live now! Order premium essentials and get doorstep delivery instantly via WhatsApp!"
         };
 
-        let categories = JSON.parse(localStorage.getItem('ormagal_categories_v11')) || ["All", "Groceries", "Electronics", "Home & Living"];
+        let categories = JSON.parse(localStorage.getItem('ormagal_categories_v12')) || ["All", "Groceries", "Electronics", "Home & Living"];
         let products = [];
-        let orders = JSON.parse(localStorage.getItem('ormagal_orders_v11')) || [];
+        let orders = JSON.parse(localStorage.getItem('ormagal_orders_v12')) || [];
         let cart = [];
         let activeCategoryFilter = "All";
         let currentModalProduct = null;
         let modalQty = 1;
+        let tempExtraImages = ["", "", ""];
 
         window.onload = function() {
             applyStoreSettings();
@@ -331,19 +378,13 @@
             }
         }
 
-        function cancelAdminLogin() {
-            window.location.hash = '';
-            switchView('store');
-        }
+        function cancelAdminLogin() { window.location.hash = ''; switchView('store'); }
 
         function verifyScreenPin() {
-            let pin = document.getElementById('screenPinInput').value;
-            if (pin === "1234") {
+            if (document.getElementById('screenPinInput').value === "1234") {
                 document.getElementById('adminLoginScreen').classList.add('hidden');
                 switchView('admin');
-            } else {
-                alert("Incorrect PIN! Try '1234'.");
-            }
+            } else { alert("Incorrect PIN! Try '1234'."); }
         }
 
         function switchView(v) {
@@ -426,6 +467,7 @@
             document.getElementById('modalProdName').innerText = product.name;
             document.getElementById('modalProdSalePrice').innerText = `₹${product.price}`;
             document.getElementById('modalProdMrpPrice').innerText = product.mrp ? `₹${product.mrp}` : '';
+            document.getElementById('modalProdGstBadge').innerText = `GST ${product.gstRate || 0}%`;
             document.getElementById('modalProdDesc').innerText = product.desc;
             document.getElementById('modalQtyVal').innerText = modalQty;
 
@@ -444,7 +486,7 @@
             const vidBox = document.getElementById('modalVideoContainer');
             if (product.video) {
                 vidBox.classList.remove('hidden');
-                document.getElementById('modalVideoFrame').src = product.video;
+                document.getElementById('modalVideoPlayer').src = product.video;
             } else { vidBox.classList.add('hidden'); }
 
             updateModalTotalPrice();
@@ -461,8 +503,8 @@
                 productId: currentModalProduct.id,
                 name: currentModalProduct.name,
                 price: currentModalProduct.price,
-                deliveryFee: 50,
-                gstRate: 0,
+                deliveryFee: currentModalProduct.deliveryFee || 50,
+                gstRate: currentModalProduct.gstRate || 0,
                 image: currentModalProduct.image,
                 quantity: modalQty
             });
@@ -494,7 +536,7 @@
 
         function updateCartTotals() {
             let subtotal = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
-            let delivery = cart.reduce((s, i) => s + (50 * i.quantity), 0);
+            let delivery = cart.reduce((s, i) => s + ((i.deliveryFee || 50) * i.quantity), 0);
             document.getElementById('cartSubtotal').innerText = `₹${subtotal}`;
             document.getElementById('cartTotalDelivery').innerText = `₹${delivery}`;
             document.getElementById('cartGrandTotal').innerText = `₹${subtotal + delivery}`;
@@ -515,21 +557,91 @@
 
             let orderText = `🛒 *NEW ORDER - Ormagal Stores*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n`;
             cart.forEach(i => { orderText += `• ${i.name} x ${i.quantity} = ₹${i.price * i.quantity}\n`; });
-            window.open(`https://wa.me/${storeSettings.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(orderText)}`, '_blank');
+
+            let newOrder = {
+                id: Date.now(),
+                date: new Date().toLocaleString(),
+                customerName: name,
+                customerPhone: phone,
+                address,
+                items: [...cart],
+                total: cart.reduce((s, i) => s + (i.price * i.quantity), 0)
+            };
+            orders.unshift(newOrder);
+            localStorage.setItem('ormagal_orders_v12', JSON.stringify(orders));
+            renderAdminOrders();
+
+            cart = [];
+            updateCartBadge();
+            closeCartDrawer();
+
+            // Show Confirmation Modal alternative
+            let waUrl = `https://wa.me/${storeSettings.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(orderText)}`;
+            document.getElementById('whatsappShareBtn').href = waUrl;
+            document.getElementById('orderConfirmationModal').classList.remove('hidden');
+        }
+
+        function closeOrderConfirmation() {
+            document.getElementById('orderConfirmationModal').classList.add('hidden');
         }
 
         function renderAdminProducts() {
             const table = document.getElementById('adminProductTable'); if (!table) return;
             table.innerHTML = '';
+            if (products.length === 0) { table.innerHTML = `<div class="col-span-full py-6 text-center text-slate-400 text-xs">No products found.</div>`; return; }
             products.forEach(p => {
                 let card = document.createElement('div');
                 card.className = "bg-white p-4 rounded-2xl border flex justify-between items-center";
-                card.innerHTML = `<span>${p.name} (₹${p.price})</span> <button onclick="deleteProduct(${p.id})" class="text-red-500 text-xs font-bold">Delete</button>`;
+                card.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <img src="${p.image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60'}" class="w-12 h-12 rounded-lg object-cover">
+                        <div>
+                            <h4 class="font-bold text-sm">${p.name}</h4>
+                            <span class="text-emerald-600 text-xs font-bold">₹${p.price} (GST: ${p.gstRate || 0}%)</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="editProduct(${p.id})" class="bg-slate-100 px-2.5 py-1.5 rounded-lg text-xs font-semibold">Edit</button>
+                        <button onclick="deleteProduct(${p.id})" class="bg-red-50 text-red-600 px-2.5 py-1.5 rounded-lg text-xs font-semibold">Delete</button>
+                    </div>
+                `;
                 table.appendChild(card);
             });
         }
 
-        function openProductModal() { document.getElementById('adminProdModal').classList.remove('hidden'); }
+        function openProductModal(prodId = null) {
+            document.getElementById('editProdId').value = prodId || '';
+            tempExtraImages = ["", "", ""];
+            document.getElementById('adminProdExtraImagesBase64').value = "";
+            document.getElementById('adminProdVideoBase64').value = "";
+
+            if (prodId) {
+                let p = products.find(item => item.id == prodId);
+                if (p) {
+                    document.getElementById('adminModalTitle').innerText = "Edit Product";
+                    document.getElementById('adminProdName').value = p.name;
+                    document.getElementById('adminProdCategorySelect').value = p.category;
+                    document.getElementById('adminProdMrp').value = p.mrp || '';
+                    document.getElementById('adminProdSale').value = p.price;
+                    document.getElementById('adminProdDelivery').value = p.deliveryFee || 50;
+                    document.getElementById('adminProdGst').value = p.gstRate || 0;
+                    document.getElementById('adminProdImgBase64').value = p.image || '';
+                    document.getElementById('adminProdDesc').value = p.desc;
+                    tempExtraImages = p.images || ["", "", ""];
+                }
+            } else {
+                document.getElementById('adminModalTitle').innerText = "Add Product";
+                document.getElementById('adminProdName').value = '';
+                document.getElementById('adminProdMrp').value = '';
+                document.getElementById('adminProdSale').value = '';
+                document.getElementById('adminProdDelivery').value = '50';
+                document.getElementById('adminProdGst').value = '0';
+                document.getElementById('adminProdImgBase64').value = '';
+                document.getElementById('adminProdDesc').value = '';
+            }
+            document.getElementById('adminProdModal').classList.remove('hidden');
+        }
+
         function closeAdminProdModal() { document.getElementById('adminProdModal').classList.add('hidden'); }
 
         document.getElementById('adminProdImgFile').addEventListener('change', function(e) {
@@ -538,29 +650,71 @@
             reader.readAsDataURL(e.target.files[0]);
         });
 
+        function handleExtraImage(e, index) {
+            let reader = new FileReader();
+            reader.onload = ev => {
+                tempExtraImages[index] = ev.target.result;
+                document.getElementById('adminProdExtraImagesBase64').value = JSON.stringify(tempExtraImages);
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        }
+
+        function handleVideoUpload(e) {
+            let reader = new FileReader();
+            reader.onload = ev => {
+                document.getElementById('adminProdVideoBase64').value = ev.target.result;
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        }
+
         function saveAdminProduct() {
+            const id = document.getElementById('editProdId').value;
             const name = document.getElementById('adminProdName').value.trim();
             const price = parseFloat(document.getElementById('adminProdSale').value) || 0;
             if (!name || !price) { alert("Name and Price required."); return; }
 
-            let newP = {
-                id: Date.now(),
-                name,
-                category: document.getElementById('adminProdCategorySelect').value,
-                mrp: parseFloat(document.getElementById('adminProdMrp').value) || 0,
-                price,
-                image: document.getElementById('adminProdImgBase64').value || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60',
-                images: document.getElementById('adminProdExtraImages').value.split(',').map(s => s.trim()).filter(s => s),
-                video: document.getElementById('adminProdVideo').value.trim(),
-                desc: document.getElementById('adminProdDesc').value.trim()
-            };
+            let primaryImg = document.getElementById('adminProdImgBase64').value;
+            let extraImgs = document.getElementById('adminProdExtraImagesBase64').value ? JSON.parse(document.getElementById('adminProdExtraImagesBase64').value) : tempExtraImages;
+            let videoData = document.getElementById('adminProdVideoBase64').value;
 
-            products.push(newP);
+            if (id) {
+                let p = products.find(item => item.id == id);
+                if (p) {
+                    p.name = name;
+                    p.category = document.getElementById('adminProdCategorySelect').value;
+                    p.mrp = parseFloat(document.getElementById('adminProdMrp').value) || 0;
+                    p.price = price;
+                    p.deliveryFee = parseFloat(document.getElementById('adminProdDelivery').value) || 50;
+                    p.gstRate = parseFloat(document.getElementById('adminProdGst').value) || 0;
+                    if (primaryImg) p.image = primaryImg;
+                    if (extraImgs.some(img => img)) p.images = extraImgs;
+                    if (videoData) p.video = videoData;
+                    p.desc = document.getElementById('adminProdDesc').value.trim();
+                }
+            } else {
+                let newP = {
+                    id: Date.now(),
+                    name,
+                    category: document.getElementById('adminProdCategorySelect').value,
+                    mrp: parseFloat(document.getElementById('adminProdMrp').value) || 0,
+                    price,
+                    deliveryFee: parseFloat(document.getElementById('adminProdDelivery').value) || 50,
+                    gstRate: parseFloat(document.getElementById('adminProdGst').value) || 0,
+                    image: primaryImg || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60',
+                    images: extraImgs.filter(img => img),
+                    video: videoData || "",
+                    desc: document.getElementById('adminProdDesc').value.trim()
+                };
+                products.push(newP);
+            }
+
             syncProductsToCloud();
             renderCustomerProducts();
             renderAdminProducts();
             closeAdminProdModal();
         }
+
+        function editProduct(id) { openProductModal(id); }
 
         function deleteProduct(id) {
             products = products.filter(p => p.id != id);
@@ -606,26 +760,26 @@
             storeSettings.upiId = document.getElementById('settingUpiId').value;
             storeSettings.announcement = document.getElementById('settingAnnouncement').value;
 
-            localStorage.setItem('ormagal_settings_v11', JSON.stringify(storeSettings));
+            localStorage.setItem('ormagal_settings_v12', JSON.stringify(storeSettings));
             applyStoreSettings();
             alert("Settings saved successfully!");
         }
 
         function handleLogoUpload(e) {
             let reader = new FileReader();
-            reader.onload = ev => { storeSettings.logo = ev.target.result; localStorage.setItem('ormagal_settings_v11', JSON.stringify(storeSettings)); applyStoreSettings(); };
+            reader.onload = ev => { storeSettings.logo = ev.target.result; localStorage.setItem('ormagal_settings_v12', JSON.stringify(storeSettings)); applyStoreSettings(); };
             reader.readAsDataURL(e.target.files[0]);
         }
 
         function handleBannerUpload(e) {
             let reader = new FileReader();
-            reader.onload = ev => { storeSettings.banner = ev.target.result; localStorage.setItem('ormagal_settings_v11', JSON.stringify(storeSettings)); applyStoreSettings(); };
+            reader.onload = ev => { storeSettings.banner = ev.target.result; localStorage.setItem('ormagal_settings_v12', JSON.stringify(storeSettings)); applyStoreSettings(); };
             reader.readAsDataURL(e.target.files[0]);
         }
 
         function handleUpiQrUpload(e) {
             let reader = new FileReader();
-            reader.onload = ev => { storeSettings.upiQr = ev.target.result; localStorage.setItem('ormagal_settings_v11', JSON.stringify(storeSettings)); togglePaymentInstructions(); alert("QR Uploaded!"); };
+            reader.onload = ev => { storeSettings.upiQr = ev.target.result; localStorage.setItem('ormagal_settings_v12', JSON.stringify(storeSettings)); togglePaymentInstructions(); alert("QR Uploaded!"); };
             reader.readAsDataURL(e.target.files[0]);
         }
 
@@ -646,7 +800,7 @@
             const val = input.value.trim();
             if (val && !categories.includes(val)) {
                 categories.push(val);
-                localStorage.setItem('ormagal_categories_v11', JSON.stringify(categories));
+                localStorage.setItem('ormagal_categories_v12', JSON.stringify(categories));
                 input.value = '';
                 renderCategoryPills();
                 renderAdminCategories();
@@ -655,13 +809,25 @@
 
         function deleteCategory(cat) {
             categories = categories.filter(c => c !== cat);
-            localStorage.setItem('ormagal_categories_v11', JSON.stringify(categories));
+            localStorage.setItem('ormagal_categories_v12', JSON.stringify(categories));
             renderCategoryPills();
             renderAdminCategories();
         }
 
-        function renderAdminOrders() {}
-        function clearAllOrders() {}
+        function renderAdminOrders() {
+            const list = document.getElementById('adminOrdersList');
+            if (!list) return;
+            list.innerHTML = '';
+            if (orders.length === 0) { list.innerHTML = `<div class="py-6 text-center text-slate-400 text-xs">No orders recorded yet.</div>`; return; }
+            orders.forEach(o => {
+                let div = document.createElement('div');
+                div.className = "bg-white p-4 rounded-xl border text-xs space-y-1";
+                div.innerHTML = `<strong class="text-slate-900">${o.customerName} (${o.customerPhone})</strong> - ₹${o.total} <br><span class="text-slate-500">${o.date}</span>`;
+                list.appendChild(div);
+            });
+        }
+
+        function clearAllOrders() { orders = []; localStorage.setItem('ormagal_orders_v12', JSON.stringify(orders)); renderAdminOrders(); }
     </script>
 </body>
 </html>
