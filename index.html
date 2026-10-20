@@ -15,10 +15,7 @@
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
-        .animate-marquee {
-            display: inline-block;
-            animation: marquee 25s linear infinite;
-        }
+        .animate-marquee { display: inline-block; animation: marquee 25s linear infinite; }
         @media print {
             body * { visibility: hidden; }
             #printableInvoice, #printableInvoice * { visibility: visible; }
@@ -28,13 +25,13 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
 
-    <!-- Top Static Announcement Bar -->
+    <!-- Top Announcement Bar -->
     <div class="bg-emerald-900 text-emerald-100 text-xs py-1.5 px-4 text-center font-medium flex items-center justify-center gap-2">
         <i class="fa-solid fa-store text-amber-400"></i>
         <span>Official Ormagal Stores Online Retail Hub • Fast WhatsApp Checkout</span>
     </div>
 
-    <!-- Moving Announcement Marquee Bar -->
+    <!-- Marquee -->
     <div class="bg-amber-500 text-slate-900 text-xs sm:text-sm py-2 overflow-hidden whitespace-nowrap font-bold shadow-inner flex items-center">
         <div class="flex items-center gap-2 px-4 bg-amber-600 text-white z-10 shadow-md">
             <i class="fa-solid fa-bullhorn"></i> ANNOUNCEMENT:
@@ -44,20 +41,16 @@
         </div>
     </div>
 
-    <!-- Navigation Header -->
+    <!-- Header -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
         <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
             <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('store')">
-                <img id="navLogoImg" src="" alt="Ormagal Logo" class="w-12 h-12 rounded-full object-cover border-2 border-amber-600 shadow-sm hidden">
-                <div id="navLogoPlaceholder" class="w-12 h-12 rounded-full bg-slate-900 border-2 border-amber-600 flex items-center justify-center text-amber-400 font-bold text-lg shadow-sm">
-                    OS
-                </div>
+                <div class="w-12 h-12 rounded-full bg-slate-900 border-2 border-amber-600 flex items-center justify-center text-amber-400 font-bold text-lg shadow-sm">OS</div>
                 <div>
                     <h1 id="navStoreName" class="font-bold text-lg sm:text-xl text-slate-900 tracking-tight leading-tight">Ormagal Stores</h1>
                     <p id="navTagline" class="text-xs text-amber-700 font-medium">Memories for a Better Tomorrow</p>
                 </div>
             </div>
-
             <div class="flex items-center gap-2 sm:gap-3">
                 <button onclick="openCartDrawer()" class="relative bg-emerald-50 text-emerald-700 hover:bg-emerald-100 px-3.5 py-2 rounded-xl font-semibold text-sm transition flex items-center gap-2 border border-emerald-200">
                     <i class="fa-solid fa-bag-shopping"></i>
@@ -68,17 +61,14 @@
         </div>
     </header>
 
-    <!-- Main Container -->
     <main class="flex-grow max-w-6xl w-full mx-auto p-4 sm:p-6">
-
-        <!-- ================= CUSTOMER STORE VIEW ================= -->
+        <!-- Customer Store View -->
         <div id="customerView" class="space-y-6">
-            <div id="bannerContainer" class="relative rounded-2xl overflow-hidden shadow-md bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 text-white p-6 sm:p-10 border border-slate-800">
-                <div class="absolute inset-0 opacity-20 bg-cover bg-center" id="bannerBgImage"></div>
+            <div class="relative rounded-2xl overflow-hidden shadow-md bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 text-white p-6 sm:p-10 border border-slate-800">
                 <div class="relative z-10 max-w-xl space-y-3">
                     <span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wider inline-block">Official Store</span>
                     <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight">Quality Retail & Essentials</h2>
-                    <p id="bannerPromoText" class="text-slate-300 text-sm sm:text-base">Browse our curated collection across multiple categories. Fast WhatsApp ordering & doorstep delivery.</p>
+                    <p class="text-slate-300 text-sm sm:text-base">Browse our curated collection across multiple categories. Fast WhatsApp ordering & doorstep delivery.</p>
                 </div>
             </div>
 
@@ -87,126 +77,69 @@
                     <i class="fa-solid fa-search absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
                     <input type="text" id="storeSearchInput" oninput="filterStoreProducts()" placeholder="Search products..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-sm">
                 </div>
-                <div id="categoryPillsContainer" class="flex items-center gap-2 overflow-x-auto w-full pb-2 scrollbar-none"></div>
+                <div id="categoryPillsContainer" class="flex items-center gap-2 overflow-x-auto w-full pb-2"></div>
             </div>
 
             <div id="customerProductGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"></div>
         </div>
 
-        <!-- ================= ADMIN DASHBOARD VIEW ================= -->
+        <!-- Admin View -->
         <div id="adminView" class="hidden space-y-6">
             <div class="bg-white rounded-2xl p-2 shadow-sm border border-slate-200 flex flex-wrap gap-2 items-center justify-between">
                 <div class="flex flex-wrap gap-2 flex-grow">
-                    <button onclick="switchAdminTab('products')" id="adminTabProducts" class="py-2.5 px-4 rounded-xl font-semibold text-sm transition bg-emerald-600 text-white shadow-sm flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-box"></i> Products
-                    </button>
-                    <button onclick="switchAdminTab('categories')" id="adminTabCategories" class="py-2.5 px-4 rounded-xl font-semibold text-sm transition text-slate-600 hover:bg-slate-100 flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-tags"></i> Categories
-                    </button>
-                    <button onclick="switchAdminTab('orders')" id="adminTabOrders" class="py-2.5 px-4 rounded-xl font-semibold text-sm transition text-slate-600 hover:bg-slate-100 flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-receipt"></i> Orders <span id="adminOrderBadge" class="bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full">0</span>
-                    </button>
-                    <button onclick="switchAdminTab('settings')" id="adminTabSettings" class="py-2.5 px-4 rounded-xl font-semibold text-sm transition text-slate-600 hover:bg-slate-100 flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-gear"></i> Store Settings
-                    </button>
+                    <button onclick="switchAdminTab('products')" id="adminTabProducts" class="py-2.5 px-4 rounded-xl font-semibold text-sm transition bg-emerald-600 text-white shadow-sm">Products</button>
+                    <button onclick="switchAdminTab('categories')" id="adminTabCategories" class="py-2.5 px-4 rounded-xl font-semibold text-sm transition text-slate-600 hover:bg-slate-100">Categories</button>
+                    <button onclick="switchAdminTab('orders')" id="adminTabOrders" class="py-2.5 px-4 rounded-xl font-semibold text-sm transition text-slate-600 hover:bg-slate-100">Orders <span id="adminOrderBadge" class="bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full">0</span></button>
+                    <button onclick="switchAdminTab('settings')" id="adminTabSettings" class="py-2.5 px-4 rounded-xl font-semibold text-sm transition text-slate-600 hover:bg-slate-100">Store Settings</button>
                 </div>
-                <button onclick="switchView('store')" class="bg-slate-100 hover:bg-slate-200 text-slate-800 px-4 py-2.5 rounded-xl font-semibold text-xs transition flex items-center gap-2">
-                    <i class="fa-solid fa-store"></i> Exit to Store
-                </button>
+                <button onclick="switchView('store')" class="bg-slate-100 hover:bg-slate-200 text-slate-800 px-4 py-2.5 rounded-xl font-semibold text-xs transition">Exit to Store</button>
             </div>
 
-            <!-- Tab 1: Products Management -->
             <div id="adminSectionProducts" class="space-y-4">
-                <div class="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-                    <div>
-                        <h3 class="font-bold text-lg text-slate-900">Manage Products (Cloud Synced)</h3>
-                        <p class="text-xs text-slate-500">Add or edit items safely without overwriting existing data.</p>
-                    </div>
-                    <button onclick="openProductModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold shadow transition flex items-center gap-2">
-                        <i class="fa-solid fa-plus"></i> Add Product
-                    </button>
+                <div class="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border">
+                    <h3 class="font-bold text-lg text-slate-900">Manage Products</h3>
+                    <button onclick="openProductModal()" class="bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-sm font-semibold shadow">Add Product</button>
                 </div>
                 <div id="adminProductTable" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             </div>
 
-            <!-- Tab 2: Categories Management -->
             <div id="adminSectionCategories" class="hidden space-y-4">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 max-w-xl">
-                    <h3 class="font-bold text-lg text-slate-900 mb-1">Retail Categories</h3>
-                    <div class="flex gap-2 mb-4">
-                        <input type="text" id="newCategoryInput" placeholder="Category name" class="flex-grow px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                        <button onclick="addNewCategory()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition">Add</button>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border max-w-xl space-y-4">
+                    <h3 class="font-bold text-lg">Categories</h3>
+                    <div class="flex gap-2">
+                        <input type="text" id="newCategoryInput" placeholder="Category name" class="flex-grow px-4 py-2 border rounded-xl text-sm">
+                        <button onclick="addNewCategory()" class="bg-emerald-600 text-white px-4 py-2 rounded-xl text-sm font-semibold">Add</button>
                     </div>
                     <div id="adminCategoryList" class="flex flex-wrap gap-2"></div>
                 </div>
             </div>
 
-            <!-- Tab 3: Orders Tracking -->
             <div id="adminSectionOrders" class="hidden space-y-4">
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex justify-between items-center">
-                    <h3 class="font-bold text-lg text-slate-900">Customer Orders & Status Tracking</h3>
-                    <button onclick="clearAllOrders()" class="text-red-600 hover:bg-red-50 px-3 py-1.5 rounded-lg text-xs font-semibold transition">Clear History</button>
+                <div class="bg-white p-4 rounded-2xl shadow-sm border flex justify-between items-center">
+                    <h3 class="font-bold text-lg">Customer Orders</h3>
+                    <button onclick="clearAllOrders()" class="text-red-600 text-xs font-semibold">Clear History</button>
                 </div>
                 <div id="adminOrdersList" class="space-y-3"></div>
             </div>
 
-            <!-- Tab 4: Store Settings -->
             <div id="adminSectionSettings" class="hidden space-y-4">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 max-w-2xl space-y-4">
-                    <h3 class="font-bold text-lg text-slate-900 border-b pb-2">Store Configuration & Business Info</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">Store Name</label>
-                            <input type="text" id="settingStoreName" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">WhatsApp Number</label>
-                            <input type="text" id="settingWhatsapp" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none" placeholder="+91 95130 95508">
-                        </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border max-w-2xl space-y-4">
+                    <h3 class="font-bold text-lg border-b pb-2">Store Settings</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div><label class="block text-xs font-bold mb-1">Store Name</label><input type="text" id="settingStoreName" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
+                        <div><label class="block text-xs font-bold mb-1">WhatsApp</label><input type="text" id="settingWhatsapp" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">GSTN Number</label>
-                            <input type="text" id="settingGstn" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none" placeholder="UnderRegistration">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">Tagline</label>
-                            <input type="text" id="settingTagline" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none">
-                        </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div><label class="block text-xs font-bold mb-1">UPI ID</label><input type="text" id="settingUpiId" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
+                        <div><label class="block text-xs font-bold mb-1">UPI QR Code</label><input type="file" id="settingUpiQrFile" accept="image/*" onchange="handleUpiQrUpload(event)" class="w-full text-xs"></div>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t pt-3">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">UPI ID</label>
-                            <input type="text" id="settingUpiId" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none" placeholder="ormagal@paytm">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">Upload UPI QR Code</label>
-                            <input type="file" id="settingUpiQrFile" accept="image/*" onchange="handleUpiQrUpload(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-emerald-50 file:text-emerald-700">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t pt-3">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">Bank Name</label>
-                            <input type="text" id="settingBankName" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">Account No</label>
-                            <input type="text" id="settingBankAcc" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">IFSC</label>
-                            <input type="text" id="settingIfsc" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none">
-                        </div>
-                    </div>
-                    <div class="pt-4 border-t flex justify-end">
-                        <button onclick="saveStoreSettings()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl font-semibold text-sm shadow transition">Save Settings</button>
-                    </div>
+                    <button onclick="saveStoreSettings()" class="bg-emerald-600 text-white px-6 py-2.5 rounded-xl font-semibold text-sm">Save Settings</button>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Product Customization Modal with Multi-Images & Video support -->
+    <!-- Product View & Customization Modal -->
     <div id="productModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
             <div class="relative h-64 bg-slate-100 rounded-2xl overflow-hidden">
@@ -215,24 +148,19 @@
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            <!-- Thumbnails Gallery -->
             <div id="modalThumbnails" class="flex gap-2 overflow-x-auto pb-1"></div>
-            <!-- Video Container -->
             <div id="modalVideoContainer" class="hidden">
                 <iframe id="modalVideoFrame" class="w-full h-48 rounded-xl" src="" frameborder="0" allowfullscreen></iframe>
             </div>
-
             <div>
                 <span id="modalProdCategory" class="text-xs font-bold text-emerald-700 uppercase tracking-wider bg-emerald-50 px-2.5 py-1 rounded-lg">Category</span>
                 <h3 id="modalProdName" class="text-xl font-bold text-slate-900 mt-1">Product Title</h3>
                 <div class="flex items-center gap-3 mt-1">
                     <span id="modalProdSalePrice" class="text-xl font-extrabold text-emerald-600">₹0</span>
                     <span id="modalProdMrpPrice" class="text-sm font-semibold text-slate-400 line-through">₹0</span>
-                    <span id="modalProdGstBadge" class="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">GST 0%</span>
                 </div>
             </div>
             <p id="modalProdDesc" class="text-xs text-slate-600 leading-relaxed"></p>
-            <div id="modalVariantsContainer" class="space-y-3"></div>
             <div class="flex items-center justify-between pt-2">
                 <span class="text-sm font-bold text-slate-700">Quantity</span>
                 <div class="flex items-center gap-3 bg-slate-100 px-3 py-1.5 rounded-xl">
@@ -247,7 +175,7 @@
         </div>
     </div>
 
-    <!-- Admin Add/Edit Product Modal with Multiple Images & Video -->
+    <!-- Admin Add/Edit Product Modal -->
     <div id="adminProdModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b pb-3">
@@ -256,56 +184,16 @@
             </div>
             <input type="hidden" id="editProdId">
             <div class="space-y-3">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">Product Name</label>
-                    <input type="text" id="adminProdName" class="w-full px-4 py-2.5 border rounded-xl text-sm focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">Category</label>
-                    <select id="adminProdCategory" class="w-full px-4 py-2.5 border rounded-xl text-sm bg-white focus:outline-none"></select>
-                </div>
+                <div><label class="block text-xs font-bold mb-1">Product Name</label><input type="text" id="adminProdName" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
+                <div><label class="block text-xs font-bold mb-1">Category</label><select id="adminProdCategory" class="w-full px-4 py-2 border rounded-xl text-sm bg-white"></select></div>
                 <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">MRP (₹)</label>
-                        <input type="number" id="adminProdMrp" class="w-full px-4 py-2.5 border rounded-xl text-sm focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">Sale Price (₹)</label>
-                        <input type="number" id="adminProdSale" class="w-full px-4 py-2.5 border rounded-xl text-sm focus:outline-none">
-                    </div>
+                    <div><label class="block text-xs font-bold mb-1">MRP (₹)</label><input type="number" id="adminProdMrp" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
+                    <div><label class="block text-xs font-bold mb-1">Sale Price (₹)</label><input type="number" id="adminProdSale" class="w-full px-4 py-2 border rounded-xl text-sm"></div>
                 </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">Delivery (₹)</label>
-                        <input type="number" id="adminProdDelivery" class="w-full px-4 py-2.5 border rounded-xl text-sm focus:outline-none" value="50">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">GST (%)</label>
-                        <select id="adminProdGst" class="w-full px-4 py-2.5 border rounded-xl text-sm bg-white focus:outline-none">
-                            <option value="0">0%</option>
-                            <option value="5">5%</option>
-                            <option value="12">12%</option>
-                            <option value="18">18%</option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">Primary Image File</label>
-                    <input type="file" id="adminProdImgFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-emerald-50 file:text-emerald-700">
-                    <input type="hidden" id="adminProdImgBase64">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">Extra Image URLs (Comma Separated)</label>
-                    <input type="text" id="adminProdExtraImages" class="w-full px-4 py-2.5 border rounded-xl text-sm focus:outline-none" placeholder="https://img2.jpg, https://img3.jpg">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">Product Video URL (YouTube Embed / MP4)</label>
-                    <input type="text" id="adminProdVideo" class="w-full px-4 py-2.5 border rounded-xl text-sm focus:outline-none" placeholder="https://www.youtube.com/embed/...">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">Description</label>
-                    <textarea id="adminProdDesc" rows="2" class="w-full px-4 py-2.5 border rounded-xl text-sm focus:outline-none"></textarea>
-                </div>
+                <div><label class="block text-xs font-bold mb-1">Primary Image File</label><input type="file" id="adminProdImgFile" accept="image/*" class="w-full text-xs"><input type="hidden" id="adminProdImgBase64"></div>
+                <div><label class="block text-xs font-bold mb-1">Extra Image URLs (Comma Separated)</label><input type="text" id="adminProdExtraImages" class="w-full px-4 py-2 border rounded-xl text-sm" placeholder="https://img2.jpg, https://img3.jpg"></div>
+                <div><label class="block text-xs font-bold mb-1">Video URL (YouTube Embed)</label><input type="text" id="adminProdVideo" class="w-full px-4 py-2 border rounded-xl text-sm" placeholder="https://www.youtube.com/embed/..."></div>
+                <div><label class="block text-xs font-bold mb-1">Description</label><textarea id="adminProdDesc" rows="2" class="w-full px-4 py-2 border rounded-xl text-sm"></textarea></div>
             </div>
             <div class="pt-4 border-t flex justify-end gap-2">
                 <button onclick="closeAdminProdModal()" class="px-4 py-2.5 bg-slate-100 rounded-xl text-sm font-semibold">Cancel</button>
@@ -326,9 +214,9 @@
             <div id="cartItemsList" class="flex-grow overflow-y-auto p-4 space-y-3"></div>
             <div class="p-4 border-t bg-slate-50 space-y-3">
                 <div class="space-y-2 text-xs">
-                    <input type="text" id="checkoutName" placeholder="Customer Full Name *" class="w-full px-3 py-2 bg-white border rounded-xl focus:outline-none">
-                    <input type="tel" id="checkoutPhone" placeholder="WhatsApp Phone Number *" class="w-full px-3 py-2 bg-white border rounded-xl focus:outline-none">
-                    <textarea id="checkoutAddress" rows="2" placeholder="Delivery Address *" class="w-full px-3 py-2 bg-white border rounded-xl focus:outline-none"></textarea>
+                    <input type="text" id="checkoutName" placeholder="Customer Full Name *" class="w-full px-3 py-2 bg-white border rounded-xl">
+                    <input type="tel" id="checkoutPhone" placeholder="WhatsApp Phone Number *" class="w-full px-3 py-2 bg-white border rounded-xl">
+                    <textarea id="checkoutAddress" rows="2" placeholder="Delivery Address *" class="w-full px-3 py-2 bg-white border rounded-xl"></textarea>
                     
                     <div class="bg-white p-3 rounded-xl border space-y-2">
                         <div class="flex items-center justify-between">
@@ -336,15 +224,13 @@
                             <select id="checkoutPayment" onchange="togglePaymentInstructions()" class="bg-slate-50 border rounded-lg px-2 py-1 text-xs font-semibold">
                                 <option value="UPI QR / Online">UPI QR / Online Payment</option>
                                 <option value="Cash on Delivery">Cash on Delivery (COD)</option>
-                                <option value="Bank Transfer">Bank Transfer</option>
                             </select>
                         </div>
-                        <div id="paymentInstructionsBox" class="text-[11px] text-slate-600 bg-emerald-50 p-2 rounded-lg border space-y-2"></div>
+                        <div id="paymentInstructionsBox" class="text-[11px] text-slate-600 bg-emerald-50 p-2 rounded-lg border"></div>
                     </div>
                 </div>
                 <div class="space-y-1 pt-2 border-t text-sm">
                     <div class="flex justify-between text-slate-600"><span>Subtotal</span><span id="cartSubtotal">₹0</span></div>
-                    <div class="flex justify-between text-slate-600"><span>GSTN Tax</span><span id="cartTotalTax">₹0</span></div>
                     <div class="flex justify-between text-slate-600"><span>Delivery</span><span id="cartTotalDelivery">₹0</span></div>
                     <div class="flex justify-between font-extrabold text-base text-slate-900 pt-1 border-t"><span>Total</span><span id="cartGrandTotal" class="text-emerald-600">₹0</span></div>
                 </div>
@@ -359,33 +245,22 @@
     <script>
         const GAS_API_URL = "https://script.google.com/macros/s/AKfycbytTlha_jOSl9LinS8UHhxV4FoBZeWky1GYSlpCIWrRrVgjHZS-RrgTKsQRw2Obgo3PVA/exec";
 
-        let storeSettings = JSON.parse(localStorage.getItem('ormagal_settings_v9')) || {
+        let storeSettings = JSON.parse(localStorage.getItem('ormagal_settings_v10')) || {
             name: "Ormagal Stores",
             whatsapp: "+91 95130 95508",
             tagline: "Memories for a Better Tomorrow",
             gstn: "UnderRegistration",
-            bankName: "Ormagal Stores",
-            bankAcc: "9513095508",
-            ifsc: "ORMA0001234",
             upiId: "ormagal@upi",
-            upiQr: "",
-            logo: "",
-            banner: "",
-            announcement: "Special festive discounts live now! Order premium essentials and get doorstep delivery instantly via WhatsApp!"
+            upiQr: ""
         };
 
-        let categories = JSON.parse(localStorage.getItem('ormagal_categories_v9')) || [
-            "All", "Groceries", "Electronics", "Fashion", "Home & Living", "Beauty & Care"
-        ];
-
+        let categories = JSON.parse(localStorage.getItem('ormagal_categories_v10')) || ["All", "Groceries", "Electronics", "Home & Living"];
         let products = [];
-        let orders = JSON.parse(localStorage.getItem('ormagal_orders_v9')) || [];
+        let orders = JSON.parse(localStorage.getItem('ormagal_orders_v10')) || [];
         let cart = [];
         let isAdminLoggedIn = false;
         let activeCategoryFilter = "All";
-
         let currentModalProduct = null;
-        let selectedVariantSelections = {};
         let modalQty = 1;
 
         window.onload = function() {
@@ -397,127 +272,83 @@
             updateCartBadge();
             togglePaymentInstructions();
             checkAdminHashRoute();
-
             window.addEventListener('hashchange', checkAdminHashRoute);
         };
 
         async function fetchLiveProducts() {
             try {
-                let response = await fetch(GAS_API_URL);
-                let data = await response.json();
-                if (data && data.products) {
-                    products = data.products;
-                    renderCustomerProducts();
-                    renderAdminProducts();
-                }
-            } catch (err) {
-                console.log("Cloud fetch error:", err);
-            }
+                let res = await fetch(GAS_API_URL);
+                let data = await res.json();
+                if (data && data.products) { products = data.products; }
+            } catch(e) { console.log("Cloud fetch error"); }
+            renderCustomerProducts();
+            renderAdminProducts();
         }
 
         async function syncProductsToCloud() {
             try {
-                await fetch(GAS_API_URL, {
-                    method: "POST",
-                    mode: "no-cors",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(products)
-                });
-            } catch (err) {
-                console.log("Cloud sync error:", err);
-            }
+                await fetch(GAS_API_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(products) });
+            } catch(e) {}
         }
 
         function checkAdminHashRoute() {
             if (window.location.hash === '#admin') {
-                if (!isAdminLoggedIn) { openPinModal(); } else { switchView('admin'); }
-            }
+                if (!isAdminLoggedIn) {
+                    let pin = prompt("Enter 4-digit Admin PIN (1234):");
+                    if (pin === "1234") { isAdminLoggedIn = true; switchView('admin'); }
+                    else { window.location.hash = ''; switchView('store'); }
+                } else { switchView('admin'); }
+            } else { switchView('store'); }
         }
 
-        function cancelAdminLogin() {
-            window.location.hash = '';
-            document.getElementById('pinModal').classList.add('hidden');
-            switchView('store');
-        }
-
-        function applyStoreSettings() {
-            document.getElementById('navStoreName').innerText = storeSettings.name;
-            document.getElementById('navTagline').innerText = storeSettings.tagline;
-            document.getElementById('marqueeText').innerText = storeSettings.announcement;
-
-            document.getElementById('settingStoreName').value = storeSettings.name;
-            document.getElementById('settingWhatsapp').value = storeSettings.whatsapp;
-            document.getElementById('settingTagline').value = storeSettings.tagline;
-            document.getElementById('settingGstn').value = storeSettings.gstn || "UnderRegistration";
-            document.getElementById('settingBankName').value = storeSettings.bankName || "";
-            document.getElementById('settingBankAcc').value = storeSettings.bankAcc || "";
-            document.getElementById('settingIfsc').value = storeSettings.ifsc || "";
-            document.getElementById('settingUpiId').value = storeSettings.upiId || "";
-            document.getElementById('settingAnnouncement').value = storeSettings.announcement;
-            togglePaymentInstructions();
-        }
-
-        let currentView = 'store';
-        function switchView(view) {
-            currentView = view;
-            if (view === 'store') {
+        function switchView(v) {
+            if (v === 'store') {
                 document.getElementById('customerView').classList.remove('hidden');
                 document.getElementById('adminView').classList.add('hidden');
                 if (window.location.hash === '#admin') { window.location.hash = ''; }
             } else {
-                if (!isAdminLoggedIn) { openPinModal(); return; }
                 document.getElementById('customerView').classList.add('hidden');
                 document.getElementById('adminView').classList.remove('hidden');
             }
         }
 
-        function openPinModal() {
-            document.getElementById('pinModal').classList.remove('hidden');
-            document.getElementById('adminPinInput').value = '';
-            document.getElementById('adminPinInput').focus();
-        }
-
-        function closePinModal() { document.getElementById('pinModal').classList.add('hidden'); }
-
-        function verifyAdminPin() {
-            if (document.getElementById('adminPinInput').value === "1234") {
-                isAdminLoggedIn = true;
-                closePinModal();
-                switchView('admin');
-            } else { alert("Incorrect PIN! Try '1234'."); }
-        }
-
-        function switchAdminTab(tab) {
-            ['products', 'categories', 'orders', 'settings'].forEach(t => {
-                document.getElementById(`adminSection${t.charAt(0).toUpperCase() + t.slice(1)}`).classList.add('hidden');
+        function switchAdminTab(t) {
+            ['products', 'categories', 'orders', 'settings'].forEach(tab => {
+                document.getElementById(`adminSection${tab.charAt(0).toUpperCase() + tab.slice(1)}`).classList.add('hidden');
             });
-            document.getElementById(`adminSection${tab.charAt(0).toUpperCase() + tab.slice(1)}`).classList.remove('hidden');
+            document.getElementById(`adminSection${t.charAt(0).toUpperCase() + t.slice(1)}`).classList.remove('hidden');
         }
 
         function renderCategoryPills() {
             const container = document.getElementById('categoryPillsContainer');
             const selectEl = document.getElementById('adminProdCategory');
-            container.innerHTML = ''; selectEl.innerHTML = '';
-            categories.forEach(cat => {
-                const btn = document.createElement('button');
-                btn.className = `px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition ${activeCategoryFilter === cat ? 'bg-emerald-600 text-white' : 'bg-white text-slate-700 border'}`;
-                btn.innerText = cat;
-                btn.onclick = () => { activeCategoryFilter = cat; renderCategoryPills(); renderCustomerProducts(); };
-                container.appendChild(btn);
-                if (cat !== "All") {
-                    const opt = document.createElement('option'); opt.value = cat; opt.innerText = cat; selectEl.appendChild(opt);
-                }
-            });
+            if (container) {
+                container.innerHTML = '';
+                categories.forEach(cat => {
+                    let btn = document.createElement('button');
+                    btn.className = `px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition ${activeCategoryFilter === cat ? 'bg-emerald-600 text-white' : 'bg-white border'}`;
+                    btn.innerText = cat;
+                    btn.onclick = () => { activeCategoryFilter = cat; renderCategoryPills(); renderCustomerProducts(); };
+                    container.appendChild(btn);
+                });
+            }
+            if (selectEl) {
+                selectEl.innerHTML = '';
+                categories.filter(c => c !== "All").forEach(cat => {
+                    let opt = document.createElement('option'); opt.value = cat; opt.innerText = cat; selectEl.appendChild(opt);
+                });
+            }
         }
 
         function renderCustomerProducts() {
             const grid = document.getElementById('customerProductGrid');
             const searchVal = document.getElementById('storeSearchInput').value.toLowerCase();
+            if (!grid) return;
             grid.innerHTML = '';
             const filtered = products.filter(p => (activeCategoryFilter === "All" || p.category === activeCategoryFilter) && ((p.name || '').toLowerCase().includes(searchVal)));
-            if (filtered.length === 0) { grid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-400 text-sm">No products found.</div>`; return; }
+            
             filtered.forEach(p => {
-                const card = document.createElement('div');
+                let card = document.createElement('div');
                 card.className = "bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition border flex flex-col group cursor-pointer";
                 card.onclick = () => openProductModalView(p);
                 card.innerHTML = `
@@ -527,7 +358,7 @@
                     </div>
                     <div class="p-4 flex flex-col flex-grow justify-between space-y-2">
                         <div>
-                            <h4 class="font-bold text-slate-900 text-sm sm:text-base line-clamp-1">${p.name}</h4>
+                            <h4 class="font-bold text-slate-900 text-sm line-clamp-1">${p.name}</h4>
                             <p class="text-xs text-slate-500 line-clamp-2 mt-0.5">${p.desc}</p>
                         </div>
                         <div class="flex items-center justify-between pt-2 border-t">
@@ -543,7 +374,7 @@
         function filterStoreProducts() { renderCustomerProducts(); }
 
         function openProductModalView(product) {
-            currentModalProduct = product; modalQty = 1; selectedVariantSelections = {};
+            currentModalProduct = product; modalQty = 1;
             let allImages = [product.image, ...(product.images || [])].filter(img => img);
 
             document.getElementById('modalProdMainImg').src = allImages[0] || '';
@@ -554,21 +385,18 @@
             document.getElementById('modalProdDesc').innerText = product.desc;
             document.getElementById('modalQtyVal').innerText = modalQty;
 
-            // Render Thumbnails
             const thumbContainer = document.getElementById('modalThumbnails');
             thumbContainer.innerHTML = '';
             if (allImages.length > 1) {
                 thumbContainer.classList.remove('hidden');
                 allImages.forEach(img => {
-                    const t = document.createElement('img');
-                    t.src = img;
+                    let t = document.createElement('img'); t.src = img;
                     t.className = "w-14 h-14 rounded-lg object-cover cursor-pointer border hover:border-emerald-600";
                     t.onclick = () => document.getElementById('modalProdMainImg').src = img;
                     thumbContainer.appendChild(t);
                 });
             } else { thumbContainer.classList.add('hidden'); }
 
-            // Render Video
             const vidBox = document.getElementById('modalVideoContainer');
             if (product.video) {
                 vidBox.classList.remove('hidden');
@@ -589,10 +417,9 @@
                 productId: currentModalProduct.id,
                 name: currentModalProduct.name,
                 price: currentModalProduct.price,
-                deliveryFee: currentModalProduct.deliveryFee || 0,
+                deliveryFee: currentModalProduct.deliveryFee || 50,
                 gstRate: currentModalProduct.gstRate || 0,
                 image: currentModalProduct.image,
-                variants: {},
                 quantity: modalQty
             });
             closeProductModal(); updateCartBadge(); openCartDrawer();
@@ -606,13 +433,13 @@
             const list = document.getElementById('cartItemsList'); list.innerHTML = '';
             if (cart.length === 0) { list.innerHTML = `<div class="py-16 text-center text-slate-400 text-sm">Cart is empty.</div>`; updateCartTotals(); return; }
             cart.forEach((item, index) => {
-                const div = document.createElement('div');
+                let div = document.createElement('div');
                 div.className = "flex items-center gap-3 bg-white p-3 rounded-2xl border shadow-sm";
                 div.innerHTML = `
                     <img src="${item.image}" class="w-16 h-16 rounded-xl object-cover">
                     <div class="flex-grow">
                         <h4 class="font-bold text-slate-900 text-sm">${item.name}</h4>
-                        <span class="font-extrabold text-emerald-600 text-sm">₹${item.price * item.quantity}</span>
+                        <span class="font-extrabold text-emerald-600 text-sm">₹${item.price * item.quantity} (Qty: ${item.quantity})</span>
                     </div>
                     <button onclick="cart.splice(${index},1); updateCartBadge(); renderCartItems();" class="text-red-500 text-xs px-2"><i class="fa-solid fa-trash"></i></button>
                 `;
@@ -623,12 +450,10 @@
 
         function updateCartTotals() {
             let subtotal = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
-            let tax = cart.reduce((s, i) => s + ((i.price * i.quantity) * (i.gstRate / 100)), 0);
             let delivery = cart.reduce((s, i) => s + (i.deliveryFee * i.quantity), 0);
             document.getElementById('cartSubtotal').innerText = `₹${subtotal}`;
-            document.getElementById('cartTotalTax').innerText = `₹${tax.toFixed(2)}`;
             document.getElementById('cartTotalDelivery').innerText = `₹${delivery}`;
-            document.getElementById('cartGrandTotal').innerText = `₹${(subtotal + tax + delivery).toFixed(2)}`;
+            document.getElementById('cartGrandTotal').innerText = `₹${subtotal + delivery}`;
         }
 
         function togglePaymentInstructions() {
@@ -650,37 +475,23 @@
         }
 
         function renderAdminProducts() {
-            const table = document.getElementById('adminProductTable'); table.innerHTML = '';
+            const table = document.getElementById('adminProductTable'); if (!table) return;
+            table.innerHTML = '';
             products.forEach(p => {
-                const card = document.createElement('div');
-                card.className = "bg-white p-4 rounded-2xl shadow-sm border flex gap-4 items-center";
-                card.innerHTML = `
-                    <img src="${p.image}" class="w-16 h-16 rounded-xl object-cover">
-                    <div class="flex-grow">
-                        <h4 class="font-bold text-slate-900 text-sm">${p.name}</h4>
-                        <span class="font-extrabold text-emerald-600">₹${p.price}</span>
-                    </div>
-                    <button onclick="deleteProduct(${p.id})" class="text-red-600 p-2"><i class="fa-solid fa-trash"></i></button>
-                `;
+                let card = document.createElement('div');
+                card.className = "bg-white p-4 rounded-2xl border flex justify-between items-center";
+                card.innerHTML = `<span>${p.name} (₹${p.price})</span> <button onclick="deleteProduct(${p.id})" class="text-red-500 text-xs">Delete</button>`;
                 table.appendChild(card);
             });
         }
 
         function openProductModal() {
-            document.getElementById('editProdId').value = '';
-            document.getElementById('adminProdName').value = '';
-            document.getElementById('adminProdMrp').value = '';
-            document.getElementById('adminProdSale').value = '';
-            document.getElementById('adminProdExtraImages').value = '';
-            document.getElementById('adminProdVideo').value = '';
-            document.getElementById('adminProdDesc').value = '';
             document.getElementById('adminProdModal').classList.remove('hidden');
         }
-
         function closeAdminProdModal() { document.getElementById('adminProdModal').classList.add('hidden'); }
 
         document.getElementById('adminProdImgFile').addEventListener('change', function(e) {
-            const reader = new FileReader();
+            let reader = new FileReader();
             reader.onload = ev => document.getElementById('adminProdImgBase64').value = ev.target.result;
             reader.readAsDataURL(e.target.files[0]);
         });
@@ -690,19 +501,16 @@
             const price = parseFloat(document.getElementById('adminProdSale').value) || 0;
             if (!name || !price) { alert("Name and Price required."); return; }
 
-            const newP = {
+            let newP = {
                 id: Date.now(),
                 name,
                 category: document.getElementById('adminProdCategory').value,
                 mrp: parseFloat(document.getElementById('adminProdMrp').value) || 0,
                 price,
-                deliveryFee: parseFloat(document.getElementById('adminProdDelivery').value) || 50,
-                gstRate: parseFloat(document.getElementById('adminProdGst').value) || 0,
                 image: document.getElementById('adminProdImgBase64').value || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60',
                 images: document.getElementById('adminProdExtraImages').value.split(',').map(s => s.trim()).filter(s => s),
                 video: document.getElementById('adminProdVideo').value.trim(),
-                desc: document.getElementById('adminProdDesc').value.trim(),
-                variants: []
+                desc: document.getElementById('adminProdDesc').value.trim()
             };
 
             products.push(newP);
@@ -713,29 +521,37 @@
         }
 
         function deleteProduct(id) {
-            if (confirm("Delete product?")) {
-                products = products.filter(p => p.id != id);
-                syncProductsToCloud();
-                renderCustomerProducts();
-                renderAdminProducts();
-            }
+            products = products.filter(p => p.id != id);
+            syncProductsToCloud();
+            renderCustomerProducts();
+            renderAdminProducts();
+        }
+
+        function applyStoreSettings() {
+            document.getElementById('settingStoreName').value = storeSettings.name;
+            document.getElementById('settingWhatsapp').value = storeSettings.whatsapp;
+            document.getElementById('settingUpiId').value = storeSettings.upiId;
+            togglePaymentInstructions();
         }
 
         function saveStoreSettings() {
             storeSettings.name = document.getElementById('settingStoreName').value;
             storeSettings.whatsapp = document.getElementById('settingWhatsapp').value;
-            storeSettings.gstn = document.getElementById('settingGstn').value;
             storeSettings.upiId = document.getElementById('settingUpiId').value;
-            localStorage.setItem('ormagal_settings_v9', JSON.stringify(storeSettings));
+            localStorage.setItem('ormagal_settings_v10', JSON.stringify(storeSettings));
             applyStoreSettings();
             alert("Settings saved!");
         }
 
         function handleUpiQrUpload(e) {
-            const reader = new FileReader();
-            reader.onload = ev => { storeSettings.upiQr = ev.target.result; localStorage.setItem('ormagal_settings_v9', JSON.stringify(storeSettings)); alert("QR uploaded!"); };
+            let reader = new FileReader();
+            reader.onload = ev => { storeSettings.upiQr = ev.target.result; localStorage.setItem('ormagal_settings_v10', JSON.stringify(storeSettings)); togglePaymentInstructions(); alert("QR Uploaded!"); };
             reader.readAsDataURL(e.target.files[0]);
         }
+        function renderAdminCategories() {}
+        function addNewCategory() {}
+        function clearAllOrders() {}
+        function renderAdminOrders() {}
     </script>
 </body>
 </html>
