@@ -172,7 +172,7 @@
                 <img id="modalProdMainImg" src="" class="w-full h-full object-cover">
                 <button onclick="closeProductModal()" class="absolute top-4 right-4 bg-white/80 hover:bg-white text-slate-800 w-9 h-9 rounded-full flex items-center justify-center shadow"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div id="modalThumbnails" class="flex gap-2 overflow-x-auto pb-1"></div>
+            <div id="modalThumbnails" class="flex gap-2 overflow-x-auto pb-1 hidden"></div>
             <div id="modalVideoContainer" class="hidden">
                 <video id="modalVideoPlayer" class="w-full h-48 rounded-xl object-cover" controls></video>
             </div>
@@ -294,18 +294,21 @@
         </div>
     </div>
 
-    <!-- Alternative Order Confirmation Modal (Bypasses WhatsApp direct launch block) -->
+    <!-- TakeApp Style Order Confirmation Receipt Modal -->
     <div id="orderConfirmationModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
             <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
                 <i class="fa-solid fa-check"></i>
             </div>
             <h3 class="font-bold text-xl text-slate-900">Order Placed Successfully!</h3>
-            <p class="text-xs text-slate-500">Click below to instantly share your order confirmation with the store via WhatsApp:</p>
+            <p class="text-xs text-slate-500">Your order has been logged. Review your receipt below and send confirmation via WhatsApp:</p>
+            
+            <div id="receiptDetailsBox" class="bg-slate-50 p-4 rounded-2xl text-left text-xs space-y-2 border"></div>
+
             <a id="whatsappShareBtn" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-bold shadow-lg transition flex items-center justify-center gap-2 text-sm">
-                <i class="fa-brands fa-whatsapp text-lg"></i> Send Order to WhatsApp Now
+                <i class="fa-brands fa-whatsapp text-lg"></i> Send Order Receipt to WhatsApp
             </a>
-            <button onclick="closeOrderConfirmation()" class="w-full bg-slate-100 text-slate-700 py-2.5 rounded-xl text-xs font-semibold">Close</button>
+            <button onclick="closeOrderConfirmation()" class="w-full bg-slate-100 text-slate-700 py-2.5 rounded-xl text-xs font-semibold">Close & Return to Store</button>
         </div>
     </div>
 
@@ -313,7 +316,7 @@
     <script>
         const GAS_API_URL = "https://script.google.com/macros/s/AKfycbytTlha_jOSl9LinS8UHhxV4FoBZeWky1GYSlpCIWrRrVgjHZS-RrgTKsQRw2Obgo3PVA/exec";
 
-        let storeSettings = JSON.parse(localStorage.getItem('ormagal_settings_v12')) || {
+        let storeSettings = JSON.parse(localStorage.getItem('ormagal_settings_v13')) || {
             name: "Ormagal Stores",
             whatsapp: "+91 95130 95508",
             tagline: "Memories for a Better Tomorrow",
@@ -328,14 +331,15 @@
             announcement: "Special festive discounts live now! Order premium essentials and get doorstep delivery instantly via WhatsApp!"
         };
 
-        let categories = JSON.parse(localStorage.getItem('ormagal_categories_v12')) || ["All", "Groceries", "Electronics", "Home & Living"];
+        let categories = JSON.parse(localStorage.getItem('ormagal_categories_v13')) || ["All", "Groceries", "Electronics", "Home & Living"];
         let products = [];
-        let orders = JSON.parse(localStorage.getItem('ormagal_orders_v12')) || [];
+        let orders = JSON.parse(localStorage.getItem('ormagal_orders_v13')) || [];
         let cart = [];
         let activeCategoryFilter = "All";
         let currentModalProduct = null;
         let modalQty = 1;
         let tempExtraImages = ["", "", ""];
+        let tempVideoData = "";
 
         window.onload = function() {
             applyStoreSettings();
@@ -460,7 +464,7 @@
 
         function openProductModalView(product) {
             currentModalProduct = product; modalQty = 1;
-            let allImages = [product.image, ...(product.images || [])].filter(img => img);
+            let allImages = [product.image, ...(product.images || [])].filter(img => img && img.trim() !== "");
 
             document.getElementById('modalProdMainImg').src = allImages[0] || '';
             document.getElementById('modalProdCategory').innerText = product.category;
@@ -468,7 +472,7 @@
             document.getElementById('modalProdSalePrice').innerText = `₹${product.price}`;
             document.getElementById('modalProdMrpPrice').innerText = product.mrp ? `₹${product.mrp}` : '';
             document.getElementById('modalProdGstBadge').innerText = `GST ${product.gstRate || 0}%`;
-            document.getElementById('modalProdDesc').innerText = product.desc;
+            document.getElementById('modalProdDesc').innerText = product.desc || '';
             document.getElementById('modalQtyVal').innerText = modalQty;
 
             const thumbContainer = document.getElementById('modalThumbnails');
@@ -477,14 +481,14 @@
                 thumbContainer.classList.remove('hidden');
                 allImages.forEach(img => {
                     let t = document.createElement('img'); t.src = img;
-                    t.className = "w-14 h-14 rounded-lg object-cover cursor-pointer border hover:border-emerald-600";
+                    t.className = "w-14 h-14 rounded-lg object-cover cursor-pointer border hover:border-emerald-600 flex-shrink-0";
                     t.onclick = () => document.getElementById('modalProdMainImg').src = img;
                     thumbContainer.appendChild(t);
                 });
             } else { thumbContainer.classList.add('hidden'); }
 
             const vidBox = document.getElementById('modalVideoContainer');
-            if (product.video) {
+            if (product.video && product.video.trim() !== "") {
                 vidBox.classList.remove('hidden');
                 document.getElementById('modalVideoPlayer').src = product.video;
             } else { vidBox.classList.add('hidden'); }
@@ -555,8 +559,13 @@
             const address = document.getElementById('checkoutAddress').value.trim();
             if (!name || !phone || !address) { alert("Please fill delivery details."); return; }
 
+            let subtotal = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+            let delivery = cart.reduce((s, i) => s + ((i.deliveryFee || 50) * i.quantity), 0);
+            let grandTotal = subtotal + delivery;
+
             let orderText = `🛒 *NEW ORDER - Ormagal Stores*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n`;
             cart.forEach(i => { orderText += `• ${i.name} x ${i.quantity} = ₹${i.price * i.quantity}\n`; });
+            orderText += `Total: ₹${grandTotal}`;
 
             let newOrder = {
                 id: Date.now(),
@@ -565,17 +574,25 @@
                 customerPhone: phone,
                 address,
                 items: [...cart],
-                total: cart.reduce((s, i) => s + (i.price * i.quantity), 0)
+                total: grandTotal
             };
             orders.unshift(newOrder);
-            localStorage.setItem('ormagal_orders_v12', JSON.stringify(orders));
+            localStorage.setItem('ormagal_orders_v13', JSON.stringify(orders));
             renderAdminOrders();
+
+            let receiptHtml = `
+                <p><strong>Customer:</strong> ${name} (${phone})</p>
+                <p><strong>Delivery Address:</strong> ${address}</p>
+                <div class="border-t my-1 pt-1"></div>
+                <p><strong>Total Amount:</strong> ₹${grandTotal}</p>
+                <p class="text-slate-500 text-[10px]">Order saved successfully!</p>
+            `;
+            document.getElementById('receiptDetailsBox').innerHTML = receiptHtml;
 
             cart = [];
             updateCartBadge();
             closeCartDrawer();
 
-            // Show Confirmation Modal alternative
             let waUrl = `https://wa.me/${storeSettings.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(orderText)}`;
             document.getElementById('whatsappShareBtn').href = waUrl;
             document.getElementById('orderConfirmationModal').classList.remove('hidden');
@@ -612,8 +629,13 @@
         function openProductModal(prodId = null) {
             document.getElementById('editProdId').value = prodId || '';
             tempExtraImages = ["", "", ""];
+            tempVideoData = "";
             document.getElementById('adminProdExtraImagesBase64').value = "";
             document.getElementById('adminProdVideoBase64').value = "";
+            document.getElementById('extraImg1').value = "";
+            document.getElementById('extraImg2').value = "";
+            document.getElementById('extraImg3').value = "";
+            document.getElementById('adminProdVideoFile').value = "";
 
             if (prodId) {
                 let p = products.find(item => item.id == prodId);
@@ -626,8 +648,9 @@
                     document.getElementById('adminProdDelivery').value = p.deliveryFee || 50;
                     document.getElementById('adminProdGst').value = p.gstRate || 0;
                     document.getElementById('adminProdImgBase64').value = p.image || '';
-                    document.getElementById('adminProdDesc').value = p.desc;
+                    document.getElementById('adminProdDesc').value = p.desc || '';
                     tempExtraImages = p.images || ["", "", ""];
+                    tempVideoData = p.video || "";
                 }
             } else {
                 document.getElementById('adminModalTitle').innerText = "Add Product";
@@ -647,10 +670,11 @@
         document.getElementById('adminProdImgFile').addEventListener('change', function(e) {
             let reader = new FileReader();
             reader.onload = ev => document.getElementById('adminProdImgBase64').value = ev.target.result;
-            reader.readAsDataURL(e.target.files[0]);
+            if (e.target.files[0]) reader.readAsDataURL(e.target.files[0]);
         });
 
         function handleExtraImage(e, index) {
+            if (!e.target.files[0]) return;
             let reader = new FileReader();
             reader.onload = ev => {
                 tempExtraImages[index] = ev.target.result;
@@ -660,8 +684,10 @@
         }
 
         function handleVideoUpload(e) {
+            if (!e.target.files[0]) return;
             let reader = new FileReader();
             reader.onload = ev => {
+                tempVideoData = ev.target.result;
                 document.getElementById('adminProdVideoBase64').value = ev.target.result;
             };
             reader.readAsDataURL(e.target.files[0]);
@@ -675,7 +701,7 @@
 
             let primaryImg = document.getElementById('adminProdImgBase64').value;
             let extraImgs = document.getElementById('adminProdExtraImagesBase64').value ? JSON.parse(document.getElementById('adminProdExtraImagesBase64').value) : tempExtraImages;
-            let videoData = document.getElementById('adminProdVideoBase64').value;
+            let videoData = document.getElementById('adminProdVideoBase64').value || tempVideoData;
 
             if (id) {
                 let p = products.find(item => item.id == id);
@@ -687,7 +713,7 @@
                     p.deliveryFee = parseFloat(document.getElementById('adminProdDelivery').value) || 50;
                     p.gstRate = parseFloat(document.getElementById('adminProdGst').value) || 0;
                     if (primaryImg) p.image = primaryImg;
-                    if (extraImgs.some(img => img)) p.images = extraImgs;
+                    p.images = extraImgs.filter(img => img && img.trim() !== "");
                     if (videoData) p.video = videoData;
                     p.desc = document.getElementById('adminProdDesc').value.trim();
                 }
@@ -701,7 +727,7 @@
                     deliveryFee: parseFloat(document.getElementById('adminProdDelivery').value) || 50,
                     gstRate: parseFloat(document.getElementById('adminProdGst').value) || 0,
                     image: primaryImg || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60',
-                    images: extraImgs.filter(img => img),
+                    images: extraImgs.filter(img => img && img.trim() !== ""),
                     video: videoData || "",
                     desc: document.getElementById('adminProdDesc').value.trim()
                 };
@@ -760,27 +786,27 @@
             storeSettings.upiId = document.getElementById('settingUpiId').value;
             storeSettings.announcement = document.getElementById('settingAnnouncement').value;
 
-            localStorage.setItem('ormagal_settings_v12', JSON.stringify(storeSettings));
+            localStorage.setItem('ormagal_settings_v13', JSON.stringify(storeSettings));
             applyStoreSettings();
             alert("Settings saved successfully!");
         }
 
         function handleLogoUpload(e) {
             let reader = new FileReader();
-            reader.onload = ev => { storeSettings.logo = ev.target.result; localStorage.setItem('ormagal_settings_v12', JSON.stringify(storeSettings)); applyStoreSettings(); };
-            reader.readAsDataURL(e.target.files[0]);
+            reader.onload = ev => { storeSettings.logo = ev.target.result; localStorage.setItem('ormagal_settings_v13', JSON.stringify(storeSettings)); applyStoreSettings(); };
+            if (e.target.files[0]) reader.readAsDataURL(e.target.files[0]);
         }
 
         function handleBannerUpload(e) {
             let reader = new FileReader();
-            reader.onload = ev => { storeSettings.banner = ev.target.result; localStorage.setItem('ormagal_settings_v12', JSON.stringify(storeSettings)); applyStoreSettings(); };
-            reader.readAsDataURL(e.target.files[0]);
+            reader.onload = ev => { storeSettings.banner = ev.target.result; localStorage.setItem('ormagal_settings_v13', JSON.stringify(storeSettings)); applyStoreSettings(); };
+            if (e.target.files[0]) reader.readAsDataURL(e.target.files[0]);
         }
 
         function handleUpiQrUpload(e) {
             let reader = new FileReader();
-            reader.onload = ev => { storeSettings.upiQr = ev.target.result; localStorage.setItem('ormagal_settings_v12', JSON.stringify(storeSettings)); togglePaymentInstructions(); alert("QR Uploaded!"); };
-            reader.readAsDataURL(e.target.files[0]);
+            reader.onload = ev => { storeSettings.upiQr = ev.target.result; localStorage.setItem('ormagal_settings_v13', JSON.stringify(storeSettings)); togglePaymentInstructions(); alert("QR Uploaded!"); };
+            if (e.target.files[0]) reader.readAsDataURL(e.target.files[0]);
         }
 
         function renderAdminCategories() {
@@ -800,7 +826,7 @@
             const val = input.value.trim();
             if (val && !categories.includes(val)) {
                 categories.push(val);
-                localStorage.setItem('ormagal_categories_v12', JSON.stringify(categories));
+                localStorage.setItem('ormagal_categories_v13', JSON.stringify(categories));
                 input.value = '';
                 renderCategoryPills();
                 renderAdminCategories();
@@ -809,7 +835,7 @@
 
         function deleteCategory(cat) {
             categories = categories.filter(c => c !== cat);
-            localStorage.setItem('ormagal_categories_v12', JSON.stringify(categories));
+            localStorage.setItem('ormagal_categories_v13', JSON.stringify(categories));
             renderCategoryPills();
             renderAdminCategories();
         }
@@ -827,7 +853,7 @@
             });
         }
 
-        function clearAllOrders() { orders = []; localStorage.setItem('ormagal_orders_v12', JSON.stringify(orders)); renderAdminOrders(); }
+        function clearAllOrders() { orders = []; localStorage.setItem('ormagal_orders_v13', JSON.stringify(orders)); renderAdminOrders(); }
     </script>
 </body>
 </html>
