@@ -506,7 +506,7 @@
 
     <!-- JavaScript Application Logic -->
     <script>
-        let storeSettings = JSON.parse(localStorage.getItem('ormagal_settings_v5')) || {
+        let storeSettings = JSON.parse(localStorage.getItem('ormagal_settings_v6')) || {
             name: "Ormagal Stores",
             whatsapp: "+91 95130 95508",
             tagline: "Memories for a Better Tomorrow",
@@ -519,12 +519,12 @@
             announcement: "Special festive discounts live now! Order premium essentials and get doorstep delivery instantly via WhatsApp!"
         };
 
-        let categories = JSON.parse(localStorage.getItem('ormagal_categories_v5')) || [
+        let categories = JSON.parse(localStorage.getItem('ormagal_categories_v6')) || [
             "All", "Groceries", "Electronics", "Fashion", "Home & Living", "Beauty & Care"
         ];
 
-        // DEFAULT PRE-LOADED PRODUCTS (Built right into code so they sync globally!)
-        let products = JSON.parse(localStorage.getItem('ormagal_products_v5')) || [
+        // DEFAULT PRE-LOADED PRODUCTS (v6)
+        let products = JSON.parse(localStorage.getItem('ormagal_products_v6')) || [
             {
                 id: 1,
                 name: "Organic Cold Pressed Coconut Oil",
@@ -555,7 +555,7 @@
             }
         ];
 
-        let orders = JSON.parse(localStorage.getItem('ormagal_orders_v5')) || [];
+        let orders = JSON.parse(localStorage.getItem('ormagal_orders_v6')) || [];
         let cart = [];
         let isAdminLoggedIn = false;
         let activeCategoryFilter = "All";
@@ -993,7 +993,7 @@
                 fulfillmentStatus: 'Unfulfilled'
             };
             orders.unshift(newOrder);
-            localStorage.setItem('ormagal_orders_v5', JSON.stringify(orders));
+            localStorage.setItem('ormagal_orders_v6', JSON.stringify(orders));
             renderAdminOrders();
 
             cart = [];
@@ -1150,7 +1150,7 @@
                 products.push(newP);
             }
 
-            localStorage.setItem('ormagal_products_v5', JSON.stringify(products));
+            localStorage.setItem('ormagal_products_v6', JSON.stringify(products));
             renderCustomerProducts();
             renderAdminProducts();
             closeAdminProdModal();
@@ -1163,7 +1163,7 @@
         function deleteProduct(id) {
             if (confirm("Are you sure you want to delete this product?")) {
                 products = products.filter(p => p.id !== id);
-                localStorage.setItem('ormagal_products_v5', JSON.stringify(products));
+                localStorage.setItem('ormagal_products_v6', JSON.stringify(products));
                 renderCustomerProducts();
                 renderAdminProducts();
             }
@@ -1188,7 +1188,7 @@
             const val = input.value.trim();
             if (val && !categories.includes(val)) {
                 categories.push(val);
-                localStorage.setItem('ormagal_categories_v5', JSON.stringify(categories));
+                localStorage.setItem('ormagal_categories_v6', JSON.stringify(categories));
                 input.value = '';
                 renderCategoryPills();
                 renderAdminCategories();
@@ -1198,7 +1198,7 @@
         function deleteCategory(cat) {
             if (confirm(`Delete category "${cat}"?`)) {
                 categories = categories.filter(c => c !== cat);
-                localStorage.setItem('ormagal_categories_v5', JSON.stringify(categories));
+                localStorage.setItem('ormagal_categories_v6', JSON.stringify(categories));
                 renderCategoryPills();
                 renderAdminCategories();
             }
@@ -1274,7 +1274,7 @@
                 if (type === 'order') o.orderStatus = val;
                 if (type === 'payment') o.paymentStatus = val;
                 if (type === 'fulfillment') o.fulfillmentStatus = val;
-                localStorage.setItem('ormagal_orders_v5', JSON.stringify(orders));
+                localStorage.setItem('ormagal_orders_v6', JSON.stringify(orders));
                 renderAdminOrders();
             }
         }
@@ -1333,7 +1333,7 @@
         function deleteOrder(id) {
             if (confirm("Delete this order record?")) {
                 orders = orders.filter(o => o.id !== id);
-                localStorage.setItem('ormagal_orders_v5', JSON.stringify(orders));
+                localStorage.setItem('ormagal_orders_v6', JSON.stringify(orders));
                 renderAdminOrders();
             }
         }
@@ -1341,7 +1341,7 @@
         function clearAllOrders() {
             if (confirm("Clear all order history?")) {
                 orders = [];
-                localStorage.setItem('ormagal_orders_v5', JSON.stringify(orders));
+                localStorage.setItem('ormagal_orders_v6', JSON.stringify(orders));
                 renderAdminOrders();
             }
         }
@@ -1356,7 +1356,7 @@
             storeSettings.ifsc = document.getElementById('settingIfsc').value.trim() || "";
             storeSettings.announcement = document.getElementById('settingAnnouncement').value.trim() || "";
 
-            localStorage.setItem('ormagal_settings_v5', JSON.stringify(storeSettings));
+            localStorage.setItem('ormagal_settings_v6', JSON.stringify(storeSettings));
             applyStoreSettings();
             alert("Store settings and business info saved successfully!");
         }
@@ -1367,7 +1367,7 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     storeSettings.logo = e.target.result;
-                    localStorage.setItem('ormagal_settings_v5', JSON.stringify(storeSettings));
+                    localStorage.setItem('ormagal_settings_v6', JSON.stringify(storeSettings));
                     applyStoreSettings();
                 };
                 reader.readAsDataURL(file);
@@ -1380,7 +1380,7 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     storeSettings.banner = e.target.result;
-                    localStorage.setItem('ormagal_settings_v5', JSON.stringify(storeSettings));
+                    localStorage.setItem('ormagal_settings_v6', JSON.stringify(storeSettings));
                     applyStoreSettings();
                 };
                 reader.readAsDataURL(file);
